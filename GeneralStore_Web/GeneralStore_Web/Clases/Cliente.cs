@@ -7,6 +7,7 @@ namespace GeneralStore_Web.Clases
 {
     public class Cliente
     {
+        private string idCliente;
         private string nombre;
         private string apellido;
         private short telefono ;
@@ -133,6 +134,19 @@ namespace GeneralStore_Web.Clases
             set
             {
                 condicionPago = value;
+            }
+        }
+
+        public string IdCliente
+        {
+            get
+            {
+                return idCliente;
+            }
+
+            set
+            {
+                idCliente = value;
             }
         }
     }
