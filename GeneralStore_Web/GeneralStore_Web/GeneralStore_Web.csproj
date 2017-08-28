@@ -125,6 +125,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Peticion\Controllers\HttpHomeController.cs" />
+    <Compile Include="Areas\Peticion\PeticionAreaRegistration.cs" />
     <Compile Include="Clases\Cliente.cs" />
     <Compile Include="Clases\Empleado.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -142,6 +144,7 @@
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Paramatros\Index.cshtml" />
+    <Content Include="Areas\Peticion\Views\web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -151,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Peticion\Models\" />
+    <Folder Include="Areas\Peticion\Views\HttpHome\" />
+    <Folder Include="Areas\Peticion\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>

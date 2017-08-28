@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeneralStore_Web.Clases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,25 @@ namespace GeneralStore_Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+
+            List<Cliente> listaCliente = new List<Cliente>();
+
+            Random r = new Random();
+
+            for (int i = 0; i <  r.Next(5,70); i++)
+            {
+
+                listaCliente.Add(new Cliente {
+                    IdCliente = "" + i,
+                    Nombre = "Pancracio " + i 
+                });
+
+            }
+
+            return View(listaCliente);
+            //return RedirectToAction("Cliente", "HttpHome", new { area = "Peticion"});
         }
+
+
     }
 }
