@@ -6,10 +6,15 @@ using System.Web.Mvc;
 
 namespace GeneralStore_Web.Controllers
 {
-    public class ParamatrosController : Controller
+    public class ClienteController : Controller
     {
-        // GET: Paramatros
+        // GET: Cliente
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult CrearCliente()
         {
             return View();
         }

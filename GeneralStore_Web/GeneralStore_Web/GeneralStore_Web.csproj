@@ -117,7 +117,60 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FrontEnd\bootstrap-dashboard\charts.html" />
+    <Content Include="FrontEnd\bootstrap-dashboard\credits.txt" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\bootstrap.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\bootstrap.min.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\custom.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\font-awesome.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\font-awesome.min.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\grasp_mobile_progress_circle-1.0.0.min.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\owl.video.play.png" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\style.blue.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\style.default.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\style.green.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\style.pink.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\style.red.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\style.sea.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\style.violet.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\fonts\fontawesome-webfont.svg" />
+    <Content Include="FrontEnd\bootstrap-dashboard\forms.html" />
+    <Content Include="FrontEnd\bootstrap-dashboard\icons-reference\fonts\dashboard.svg" />
+    <Content Include="FrontEnd\bootstrap-dashboard\icons-reference\icons-reference.html" />
+    <Content Include="FrontEnd\bootstrap-dashboard\icons-reference\styles.css" />
+    <Content Include="FrontEnd\bootstrap-dashboard\img\avatar-1.jpg" />
+    <Content Include="FrontEnd\bootstrap-dashboard\img\avatar-2.jpg" />
+    <Content Include="FrontEnd\bootstrap-dashboard\img\avatar-3.jpg" />
+    <Content Include="FrontEnd\bootstrap-dashboard\img\avatar-4.jpg" />
+    <Content Include="FrontEnd\bootstrap-dashboard\img\avatar-5.jpg" />
+    <Content Include="FrontEnd\bootstrap-dashboard\img\avatar-6.jpg" />
+    <Content Include="FrontEnd\bootstrap-dashboard\img\favicon.ico" />
+    <Content Include="FrontEnd\bootstrap-dashboard\img\template-mac.png" />
+    <Content Include="FrontEnd\bootstrap-dashboard\index.html" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\bootstrap.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\bootstrap.min.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\charts-custom.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\charts-home.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\front.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\grasp_mobile_progress_circle-1.0.0.min.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\jquery.cookie.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\jquery.nicescroll.min.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\jquery.validate.min.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\tether.min.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\js\waterbubble.min.js" />
+    <Content Include="FrontEnd\bootstrap-dashboard\license.txt" />
+    <Content Include="FrontEnd\bootstrap-dashboard\login.html" />
+    <Content Include="FrontEnd\bootstrap-dashboard\readme.txt" />
+    <Content Include="FrontEnd\bootstrap-dashboard\register.html" />
+    <Content Include="FrontEnd\bootstrap-dashboard\tables.html" />
+    <Content Include="FrontEnd\Chart.min.js" />
     <Content Include="FrontEnd\CSS\Principal.css" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="FrontEnd\icons.css" />
+    <Content Include="FrontEnd\jquery.min.js" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
@@ -129,8 +182,8 @@
     <Compile Include="Areas\Peticion\PeticionAreaRegistration.cs" />
     <Compile Include="Clases\Cliente.cs" />
     <Compile Include="Clases\Empleado.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ParamatrosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -142,9 +195,53 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Paramatros\Index.cshtml" />
     <Content Include="Areas\Peticion\Views\web.config" />
+    <Content Include="Views\Compartida\_LayoutPrincipal.cshtml" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\bootstrap.css.map" />
+    <Content Include="FrontEnd\bootstrap-dashboard\css\bootstrap.min.css.map" />
+    <Content Include="FrontEnd\bootstrap-dashboard\fonts\fontawesome-webfont.eot" />
+    <Content Include="FrontEnd\bootstrap-dashboard\fonts\fontawesome-webfont.ttf" />
+    <Content Include="FrontEnd\bootstrap-dashboard\fonts\fontawesome-webfont.woff" />
+    <Content Include="FrontEnd\bootstrap-dashboard\fonts\fontawesome-webfont.woff2" />
+    <Content Include="FrontEnd\bootstrap-dashboard\fonts\FontAwesome.otf" />
+    <Content Include="FrontEnd\bootstrap-dashboard\icons-reference\fonts\dashboard.eot" />
+    <Content Include="FrontEnd\bootstrap-dashboard\icons-reference\fonts\dashboard.ttf" />
+    <Content Include="FrontEnd\bootstrap-dashboard\icons-reference\fonts\dashboard.woff" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\core.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\list.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\path.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="FrontEnd\font-awesome-4.7.0\scss\_variables.scss" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Cliente\CrearCliente.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -157,6 +254,7 @@
     <Folder Include="Areas\Peticion\Models\" />
     <Folder Include="Areas\Peticion\Views\HttpHome\" />
     <Folder Include="Areas\Peticion\Views\Shared\" />
+    <Folder Include="Imagen\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>

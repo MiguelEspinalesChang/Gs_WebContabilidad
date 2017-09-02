@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GS contabilidad</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+
+    <!-- Bootstrap CSS-->
+    <link href="~/FrontEnd/bootstrap-dashboard/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Google fonts - Roboto -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+
+    <!-- theme stylesheet-->
+    <link href="~/FrontEnd/bootstrap-dashboard/css/style.default.css" rel="stylesheet" />
+
+    <!-- jQuery Circle-->
+    <script src="~/FrontEnd/bootstrap-dashboard/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+
+    <!-- Custom stylesheet - for your changes-->
+    <link href="~/FrontEnd/bootstrap-dashboard/css/custom.css" rel="stylesheet" />
+
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!-- Font Awesome CDN-->
+    <!-- you can replace it by local Font Awesome-->
+    <link href="~/FrontEnd/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="~/FrontEnd/icons.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <!-- Side Navbar -->
+    <nav class="side-navbar">
+        <div class="side-navbar-wrapper">
+            <div class="sidenav-header d-flex align-items-center justify-content-center">
+                <div class="sidenav-header-inner text-center">
+                    <img src="~/Imagen/GeneralStore.PNG" alt="logo" class="img-fluid rounded-circle" />
+                    <h2 class="h5 text-uppercase">Tomasio Justino</h2><span class="text-uppercase">Usuario del sistema</span>
+                </div>
+                <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
+            </div>
+            <div class="main-menu">
+                <ul id="side-main-menu" class="side-menu list-unstyled">
+                    <li class="active"><a href="/Home/Index"> <i class="icon-home"></i><span>Inicio</span></a></li>
+                    <li> <a href="/Cliente/CrearCliente"><i class="icon-user"></i><span>Clientes</span></a></li>
+                    @*<li> <a href="charts.html"><i class="icon-presentation"></i><span>Charts</span></a></li>*@
+                    @*<li> <a href="tables.html"> <i class="icon-grid"> </i><span>Tables                        </span></a></li>*@
+                    @*<li> <a href="login.html"> <i class="icon-interface-windows"></i><span>Login page                        </span></a></li>*@
+                    @*<li>
+                            <a href="#">
+                                <i class="icon-mail"></i><span>Demo</span>
+                                <div class="badge badge-warning">6 New</div>
+                            </a>
+                        </li>*@
+                </ul>
+            </div>
+            @*<div class="admin-menu">
+                    <ul id="side-admin-menu" class="side-menu list-unstyled">
+                        <li>
+                            <a href="#pages-nav-list" data-toggle="collapse" aria-expanded="false">
+                                <i class="icon-interface-windows"></i><span>Dropdown</span>
+                                <div class="arrow pull-right"><i class="fa fa-angle-down"></i></div>
+                            </a>
+                            <ul id="pages-nav-list" class="collapse list-unstyled">
+                                <li> <a href="#">Page 1</a></li>
+                                <li> <a href="#">Page 2</a></li>
+                                <li> <a href="#">Page 3</a></li>
+                                <li> <a href="#">Page 4</a></li>
+                            </ul>
+                        </li>
+                        <li> <a href="#"> <i class="icon-screen"> </i><span>Demo</span></a></li>
+                        <li>
+                            <a href="#">
+                                <i class="icon-flask"> </i><span>Demo</span>
+                                <div class="badge badge-info">Special</div>
+                            </a>
+                        </li>
+                        <li> <a href=""> <i class="icon-flask"> </i><span>Demo</span></a></li>
+                        <li> <a href=""> <i class="icon-picture"> </i><span>Demo</span></a></li>
+                    </ul>
+                </div>*@
+        </div>
+    </nav>
+    <div class="page home-page">
+
+        <!-- navbar-->
+        <header class="header">
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <div class="navbar-holder d-flex align-items-center justify-content-between">
+                        <div class="navbar-header">
+                            <a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="index.html" class="navbar-brand">
+                                <div class="brand-text hidden-sm-down"><span>GS </span><strong class="text-primary">  Contabilidad</strong></div>
+                            </a>
+                        </div>
+                        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                            <li class="nav-item dropdown">
+                                <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>
+                                <ul aria-labelledby="notifications" class="dropdown-menu">
+                                    <li>
+                                        <a rel="nofollow" href="#" class="dropdown-item">
+                                            <div class="notification d-flex justify-content-between">
+                                                <div class="notification-content"><i class="fa fa-envelope"></i>You have 6 new messages </div>
+                                                <div class="notification-time"><small>4 minutes ago</small></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a rel="nofollow" href="#" class="dropdown-item">
+                                            <div class="notification d-flex justify-content-between">
+                                                <div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
+                                                <div class="notification-time"><small>4 minutes ago</small></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a rel="nofollow" href="#" class="dropdown-item">
+                                            <div class="notification d-flex justify-content-between">
+                                                <div class="notification-content"><i class="fa fa-upload"></i>Server Rebooted</div>
+                                                <div class="notification-time"><small>4 minutes ago</small></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a rel="nofollow" href="#" class="dropdown-item">
+                                            <div class="notification d-flex justify-content-between">
+                                                <div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
+                                                <div class="notification-time"><small>10 minutes ago</small></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-bell"></i>view all notifications                                            </strong></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope"></i><span class="badge badge-info">10</span></a>
+                                <ul aria-labelledby="notifications" class="dropdown-menu">
+                                    <li>
+                                        <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                            <div class="msg-profile"> <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                            <div class="msg-body">
+                                                <h3 class="h5">Jason Doe</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                            <div class="msg-profile"> <img src="img/avatar-2.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                            <div class="msg-body">
+                                                <h3 class="h5">Frank Williams</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                            <div class="msg-profile"> <img src="img/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                            <div class="msg-body">
+                                                <h3 class="h5">Ashley Wood</h3><span>sent you a direct message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-envelope"></i>Read all messages    </strong></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a href="login.html" class="nav-link logout">Logout<i class="fa fa-sign-out"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+        @RenderBody()
+
+
+        <footer class="main-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Your company &copy; 2017-2019</p>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <p>Design by <a href="#" class="external">Diseñado por Chang</a></p>
+                        <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- Javascript files-->
+    <script src="~/FrontEnd/jquery.min.js"></script>
+    <script src="~/FrontEnd/bootstrap-dashboard/js/tether.min.js"></script>
+    <script src="~/FrontEnd/bootstrap-dashboard/js/bootstrap.min.js"></script>
+    <script src="~/FrontEnd/bootstrap-dashboard/js/jquery.cookie.js"></script>
+    <script src="~/FrontEnd/bootstrap-dashboard/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>
+    <script src="~/FrontEnd/bootstrap-dashboard/js/jquery.nicescroll.min.js"></script>
+    <script src="~/FrontEnd/bootstrap-dashboard/js/jquery.validate.min.js"></script>
+    <script src="~/FrontEnd/Chart.min.js"></script>
+    <script src="~/FrontEnd/bootstrap-dashboard/js/charts-home.js"></script>
+    <script src="~/FrontEnd/bootstrap-dashboard/js/front.js"></script>
+
+</body>
+</html>

@@ -27,7 +27,8 @@ namespace GeneralStore_Web.Controllers
 
             }
 
-            return View(listaCliente);
+            return View();
+            //return View(listaCliente);
             //return RedirectToAction("Cliente", "HttpHome", new { area = "Peticion"});
         }
 
