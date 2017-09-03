@@ -186,6 +186,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Cliente\ClienteAreaRegistration.cs" />
+    <Compile Include="Areas\Inventario\Controllers\ItemController.cs" />
+    <Compile Include="Areas\Inventario\InventarioAreaRegistration.cs" />
     <Compile Include="Areas\Peticion\Controllers\HttpHomeController.cs" />
     <Compile Include="Areas\Peticion\PeticionAreaRegistration.cs" />
     <Compile Include="Clases\Bodega.cs" />
@@ -254,6 +257,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cliente\CrearCliente.cshtml" />
     <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\web.config" />
+    <Content Include="Areas\Cliente\Views\web.config" />
+    <Content Include="Areas\Inventario\Views\Item\IndexItem.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -263,11 +269,22 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Cliente\Controllers\" />
+    <Folder Include="Areas\Cliente\Models\" />
+    <Folder Include="Areas\Cliente\Views\Shared\" />
+    <Folder Include="Areas\Inventario\Models\" />
+    <Folder Include="Areas\Inventario\Views\Shared\" />
     <Folder Include="Areas\Peticion\Models\" />
     <Folder Include="Areas\Peticion\Views\HttpHome\" />
     <Folder Include="Areas\Peticion\Views\Shared\" />
     <Folder Include="Imagen\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ModeloDatos\ModeloDatos.csproj">
+      <Project>{2fa8fb9b-aaed-4b34-8e00-ae2c81cb6d7e}</Project>
+      <Name>ModeloDatos</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
