@@ -32,6 +32,14 @@ namespace GeneralStore_Web.Controllers
             //return RedirectToAction("Cliente", "HttpHome", new { area = "Peticion"});
         }
 
+        [HttpPost]
+        public ActionResult MenuActivo(string _areaValue, string _controllerValue)
+        {
+
+            return null;
+
+        }
+
 
     }
 }

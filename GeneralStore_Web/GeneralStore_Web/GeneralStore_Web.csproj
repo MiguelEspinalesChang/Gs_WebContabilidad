@@ -179,14 +179,17 @@
     <Content Include="FrontEnd\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="FrontEnd\icons.css" />
     <Content Include="FrontEnd\jquery.min.js" />
+    <Content Include="FrontEnd\vue.js" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\JS\Global\GlobalVue.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Cliente\ClienteAreaRegistration.cs" />
+    <Compile Include="Areas\Cliente\Controllers\ClienteController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ItemController.cs" />
     <Compile Include="Areas\Inventario\InventarioAreaRegistration.cs" />
     <Compile Include="Areas\Peticion\Controllers\HttpHomeController.cs" />
@@ -260,6 +263,7 @@
     <Content Include="Areas\Inventario\Views\web.config" />
     <Content Include="Areas\Cliente\Views\web.config" />
     <Content Include="Areas\Inventario\Views\Item\IndexItem.cshtml" />
+    <Content Include="Areas\Cliente\Views\Cliente\IndexCliente.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -269,7 +273,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Cliente\Controllers\" />
     <Folder Include="Areas\Cliente\Models\" />
     <Folder Include="Areas\Cliente\Views\Shared\" />
     <Folder Include="Areas\Inventario\Models\" />
