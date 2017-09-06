@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace GeneralStore_Web.Areas.Cliente.Controllers
+namespace GeneralStore_Web.Controllers
 {
-    public class ClienteController : Controller
+    public class tablasController : Controller
     {
-        // GET: Cliente/Cliente
+        // GET: tablas
         public ActionResult Index()
         {
-            return View("/IndexCliente");
+            return View();
         }
     }
 }

@@ -201,6 +201,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\tablasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -264,6 +265,7 @@
     <Content Include="Areas\Cliente\Views\web.config" />
     <Content Include="Areas\Inventario\Views\Item\IndexItem.cshtml" />
     <Content Include="Areas\Cliente\Views\Cliente\IndexCliente.cshtml" />
+    <Content Include="Views\tablas\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
