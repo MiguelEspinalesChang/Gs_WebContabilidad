@@ -11,7 +11,7 @@ namespace GeneralStore_Web.Areas.Cliente.Controllers
         // GET: Cliente/Cliente
         public ActionResult Index()
         {
-            return View("/IndexCliente");
+            return View("IndexCliente");
         }
     }
 }
