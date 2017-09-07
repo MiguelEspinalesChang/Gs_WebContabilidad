@@ -125,6 +125,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\eslilos.css" />
     <Content Include="FrontEnd\bootstrap-dashboard\charts.html" />
     <Content Include="FrontEnd\bootstrap-dashboard\credits.txt" />
     <Content Include="FrontEnd\bootstrap-dashboard\css\bootstrap.css" />
@@ -183,6 +184,7 @@
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\cliente.js" />
     <Content Include="scripts\JS\Global\GlobalVue.js" />
     <Content Include="Web.config" />
   </ItemGroup>
