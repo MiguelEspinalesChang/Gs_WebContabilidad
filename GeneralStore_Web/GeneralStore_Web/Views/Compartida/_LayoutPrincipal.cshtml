@@ -27,7 +27,6 @@
     <link href="~/FrontEnd/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
     <link href="~/FrontEnd/icons.css" rel="stylesheet" />
-    <link href="~/css/eslilos.css" rel="stylesheet" />
 
     @{
         //var jeje = HttpContext.Current.Request.RequestContext.RouteData.Values["area"];
@@ -50,9 +49,7 @@
 
 </head>
 <body>
-    <form >
-
-    </form>
+    <form></form>
     <p id="areaGS" style="display: none">@area</p>
     <p id="controllerGS" style="display: none">@controller</p>
     <!-- Side Navbar -->
@@ -68,15 +65,15 @@
             <div class="main-menu">
                 <ul id="side-main-menu" class="side-menu list-unstyled">
 
-                    <li v-bind:class="{ active: menuHome }" ><a href="/Home/Index"> <i class="icon-home"></i><span>Inicio</span></a></li>
+                    <li v-bind:class="{ active: menuHome }"><a href="/Home/Index"> <i class="icon-home"></i><span>Inicio</span></a></li>
                     <li v-bind:class="{ active: menuCliente }"> <a href="/Cliente/Cliente/Index"><i class="icon-user"></i><span>Clientes</span></a></li>
-                    <li v-bind:class="{ active: menuInventario }"> <a href="/Inventario/Item/Index"><i class="icon-presentation"></i><span>Inventario</span></a></li>
+                    <li v-bind:class="{ active: menuInventario }"> <a href="/Inventario/MenuInventario/Index"><i class="icon-presentation"></i><span>Inventario</span></a></li>
                     <li><a href="/tablas/Index"><i class="icon-pencil-case"></i><span>tablas</span></a></li>
 
 
                     @*<li class="active"><a href="/Home/Index"> <i class="icon-home"></i><span>Inicio</span></a></li>
-                    <li > <a href="/Cliente/CrearCliente"><i class="icon-user"></i><span>Clientes</span></a></li>
-                    <li > <a href="/Item/Index"><i class="icon-presentation"></i><span>Inventario</span></a></li>*@
+                        <li > <a href="/Cliente/CrearCliente"><i class="icon-user"></i><span>Clientes</span></a></li>
+                        <li > <a href="/Item/Index"><i class="icon-presentation"></i><span>Inventario</span></a></li>*@
 
                     @*<li> <a href="tables.html"> <i class="icon-grid"> </i><span>Tables                        </span></a></li>*@
                     @*<li> <a href="login.html"> <i class="icon-interface-windows"></i><span>Login page                        </span></a></li>*@
@@ -206,18 +203,21 @@
         </header>
 
 
+        @*Render VUE antes del BODY*@
+        <script src="~/FrontEnd/vue.js"></script>
+
+        <!-- Counts Section -->
         <section class="dashboard-counts section-padding">
-           <div class="container-fluid">
-               <div class="row">
+            <div class="container-fluid">
+                <div class="row">
 
-                   @RenderBody()
+                    @RenderBody()
 
 
-                   </div>
-               </div>
+                </div>
+            </div>
         </section>
 
-       
 
 
         <footer class="main-footer">
@@ -236,7 +236,7 @@
 
     </div>
 
-    <script src="~/FrontEnd/vue.js"></script>
+
     <script src="~/scripts/JS/Global/GlobalVue.js"></script>
 
 

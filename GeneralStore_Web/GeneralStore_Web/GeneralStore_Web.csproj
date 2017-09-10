@@ -125,7 +125,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="css\eslilos.css" />
     <Content Include="FrontEnd\bootstrap-dashboard\charts.html" />
     <Content Include="FrontEnd\bootstrap-dashboard\credits.txt" />
     <Content Include="FrontEnd\bootstrap-dashboard\css\bootstrap.css" />
@@ -184,15 +183,18 @@
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="scripts\cliente.js" />
     <Content Include="scripts\JS\Global\GlobalVue.js" />
+    <Content Include="scripts\JS\Inventario\Bodega.js" />
+    <Content Include="scripts\JS\Inventario\MenuInventario.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Cliente\ClienteAreaRegistration.cs" />
     <Compile Include="Areas\Cliente\Controllers\ClienteController.cs" />
+    <Compile Include="Areas\Inventario\Controllers\BodegaController.cs" />
     <Compile Include="Areas\Inventario\Controllers\ItemController.cs" />
+    <Compile Include="Areas\Inventario\Controllers\MenuInventarioController.cs" />
     <Compile Include="Areas\Inventario\InventarioAreaRegistration.cs" />
     <Compile Include="Areas\Peticion\Controllers\HttpHomeController.cs" />
     <Compile Include="Areas\Peticion\PeticionAreaRegistration.cs" />
@@ -268,6 +270,8 @@
     <Content Include="Areas\Inventario\Views\Item\IndexItem.cshtml" />
     <Content Include="Areas\Cliente\Views\Cliente\IndexCliente.cshtml" />
     <Content Include="Views\tablas\Index.cshtml" />
+    <Content Include="Areas\Inventario\Views\MenuInventario\IndexMenuInventario.cshtml" />
+    <Content Include="Areas\Inventario\Views\Bodega\IndexBodega.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

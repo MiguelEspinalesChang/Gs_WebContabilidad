@@ -55,3 +55,5 @@ var vueObj = new Vue({
 
 
 });
+
+vueObj.config.debug = true

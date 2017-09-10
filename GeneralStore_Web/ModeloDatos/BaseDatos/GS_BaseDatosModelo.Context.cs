@@ -26,5 +26,7 @@ namespace ModeloDatos.BaseDatos
         }
     
         public DbSet<Item> Items { get; set; }
+        public DbSet<Bodega> Bodegas { get; set; }
+        public DbSet<Item_Bodega> Item_Bodega { get; set; }
     }
 }
