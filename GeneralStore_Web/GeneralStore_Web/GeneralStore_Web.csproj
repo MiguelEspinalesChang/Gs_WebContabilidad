@@ -173,11 +173,22 @@
     <Content Include="FrontEnd\bootstrap-dashboard\tables.html" />
     <Content Include="FrontEnd\Chart.min.js" />
     <Content Include="FrontEnd\CSS\Principal.css" />
+    <Content Include="FrontEnd\DataTable\dataTables.bootstrap.min.css" />
+    <Content Include="FrontEnd\DataTable\dataTables.bootstrap.min.js" />
+    <Content Include="FrontEnd\DataTable\jquery.dataTables.css" />
+    <Content Include="FrontEnd\DataTable\jquery.dataTables.js" />
     <Content Include="FrontEnd\font-awesome-4.7.0\css\font-awesome.css" />
     <Content Include="FrontEnd\font-awesome-4.7.0\css\font-awesome.min.css" />
     <Content Include="FrontEnd\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
     <Content Include="FrontEnd\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="FrontEnd\icons.css" />
+    <Content Include="FrontEnd\images\favicon.ico" />
+    <Content Include="FrontEnd\images\sort_asc.png" />
+    <Content Include="FrontEnd\images\sort_asc_disabled.png" />
+    <Content Include="FrontEnd\images\sort_both.png" />
+    <Content Include="FrontEnd\images\sort_desc.png" />
+    <Content Include="FrontEnd\images\sort_desc_disabled.png" />
+    <Content Include="FrontEnd\jquery-3.2.1.min.js" />
     <Content Include="FrontEnd\jquery.min.js" />
     <Content Include="FrontEnd\vue.js" />
     <Content Include="Global.asax" />
@@ -272,6 +283,7 @@
     <Content Include="Views\tablas\Index.cshtml" />
     <Content Include="Areas\Inventario\Views\MenuInventario\IndexMenuInventario.cshtml" />
     <Content Include="Areas\Inventario\Views\Bodega\IndexBodega.cshtml" />
+    <Content Include="FrontEnd\images\Sorting icons.psd" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

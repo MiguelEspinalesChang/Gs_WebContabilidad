@@ -4,16 +4,30 @@
     Layout = "~/Views/Compartida/_LayoutPrincipal.cshtml";
 }
 
+<link href="~/FrontEnd/DataTable/jquery.dataTables.css" rel="stylesheet" />
+@*<link href="~/FrontEnd/DataTable/dataTables.bootstrap.min.css" rel="stylesheet" />*@
 
-<div class="col-xs-12" id="appVue">
+<script src="~/FrontEnd/DataTable/jquery.dataTables.js"></script>
+@*<script src="~/FrontEnd/DataTable/dataTables.bootstrap.min.js"></script>*@
 
-    
-    <tabla-gs :columnas-Gs="columnasGs" :dataJson-Gs="dataJsonGs">
+<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" id="appVue" style="overflow: auto">
 
-    </tabla-gs>
+    <div class="card">
+        <div class="card-header d-flex align-items-center">
+            <h2 class="h5 display">Tabla para Bodegas</h2>
+        </div>
+        <div class="card-block">
 
+
+            <tabla-noob :id-tabla="idTabla" :columnas-noob="columnasNoob" :data-noob="dataNoob">
+
+            </tabla-noob>
+
+        </div>
+    </div>
 
 </div>
+
 
 <script src="~/scripts/JS/Inventario/Bodega.js"></script>
 

@@ -1,67 +1,155 @@
-﻿Vue.component('tabla-gs', {
-    template: [
-        '<table class="table table-striped">',
-        '<thead>',
-        '<tr>',
-            '<th v-for="item in columnasGs">',
-                '{{item.nombre}}',
-            '</th>',
-        '</tr>',
-        '</thead>',
-        '<tbody>',
-        '</tbody>',
-        '</table>'
-    ].join(''),
-    props: {
-        columnasGs: {
-            type: Array,
-            required: true
-        },
-        dataJsonGs: {
-            type: Array,
-            required: true
-        }
-    }
-});
+﻿$(document).ready(function () {
 
 
-var vueObj = new Vue({
-    el: "#appVue",
-    data: {
-        columnasGs: [
-            {
-                nombre: "uno"
+    var tablaNoobVar = Vue.component("tabla-noob", {
+        /*	template: [
+            '<table :id="idTabla">',
+            '<thead>',
+            '<tr>',
+            '<td :v-for="colN in columnasNoob">',
+            '{{colN.nombre}}'
+            '</td>',
+            '</tr>',
+            '</thead>',
+            '<tbody>',
+            '<tr :v-for="filaN in dataNoob">',
+                '<td>',
+                '',
+                ,'</td>',
+            '</tr>',
+            '</tbody>',
+            '</table>'
+            ].join(''),*/
+        template: [
+            '<table :id="idTabla" class="table table-striped table-hover"  style="width=100%" cellspacing="0">',
+            '</table>'
+        ].join(''),
+        props: {
+            idTabla: {
+                type: String,
+                required: true
             },
-            {
-                nombre: "dos"
+            columnasNoob: {
+                type: Array,
+                required: true
             },
-            {
-                nombre: "tres"
+            dataNoob: {
+                type: Array,
+                required: true
             }
-        ],
-        dataJsonGs: {}
-    },
-    methods:
-    {
-        CargarDataInventario: function () {
-            fetch('/Inventario/MenuInventario/GetDataGeneral', {
-                method: 'get',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(function (response) {
+        },
+        mounted() {
+            this.CrearTabla()
+        },
+        methods: {
+            CrearTabla: function () {
+                //	$("#"+this.idTabla).DataTable();
+                //	$('#'+this.idTabla).DataTable( {
+                //	data: this.dataNoob,
+                //	columns: this.columnasNoob
+                //	} );
 
-            })
-            .then(function (json) {
+                //	$("#"+this.idTabla).addClass("jeje");
+                //	alert($("#"+this.idTabla).size());
+            }
+        },
+        watch: {
+            dataNoob: function (val, oldVal) {
 
-            }.bind(this));
+                $('#' + this.idTabla).DataTable({
+                    data: this.dataNoob,
+                    columns: this.columnasNoob
+                });
+
+            }
         }
-    },
-    mounted: function () {
-        //this.CargarDataInventario();
-    }
+
+    });
+
+    var app = new Vue({
+        el: "#appVue",
+        data: {
+            mensaje: "Programando desde el Hospital",
+            idTabla: "jojojojo",
+            columnasNoob: [
+                {
+                    data: "IdBodega"
+                },
+                {
+                    data: "Nombre"
+                },
+                {
+                    data: "Descripcion"
+                },
+                {
+                    data: "Codigo"
+                }
+            ],
+            dataNoob: [],
+            total: 0,
+            datosJson: []
+        },
+        mounted() {
+            this.RecargarTabla()
+        },
+        methods: {
+            BotonPrueba: function () {
+                this.total = this.dataNoob.length;
+                this.datosJson = JSON.stringify(this.dataNoob);
+            },
+            RecargarTabla: function () {
+                var random = Math.floor((Math.random() * 70) + 4);
+
+                var arregloNombre = [
+                    'Carazeña',
+                    'Loquera',
+                    'Alucin',
+                    'Ninja',
+                    'killa queen',
+                    'Naniiii',
+                    'Siuuuuu',
+                    'Trapitos',
+                    'Golazoo',
+                    'El nexo',
+                    'Taijutsu',
+                    'Robocop',
+                    'Chayo palo',
+                    'Antena',
+                    'Chun lee',
+                    'Chaman mejora',
+                    'Dk caster',
+                    'Caza melee',
+                    'Bootstrap',
+                    'que nootaa',
+                    'El chatel',
+                ];
+
+                var codigos = [
+                    'Loq-',
+                    'Cod-',
+                    'Item-',
+                    'Bode-',
+                    'Gol-'
+                ];
+
+                for (var iii = 0; iii < random; iii++) {
+                    var randomNombre = Math.floor((Math.random() * 19) + 0);
+                    var randomCodigo = Math.floor((Math.random() * 4) + 0);
+                    var objeto44 = {
+
+                        "IdBodega": "" + iii,
+                        "Nombre": "" + arregloNombre[randomNombre],
+                        "Descripcion": "" + codigos[randomCodigo] + "  ///^&&&$$  " + arregloNombre[randomNombre] + " %€£##*#&",
+                        "Codigo": "" + codigos[randomCodigo] + iii
+                    };
+                    this.dataNoob.push(objeto44);
+
+                }
 
 
+            }
+        }
+    });
 
+    $('#example').DataTable();
 });
