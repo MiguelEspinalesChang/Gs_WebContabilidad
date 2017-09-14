@@ -20,7 +20,7 @@ namespace GeneralStore_Web.Areas.Inventario.Controllers
         public JsonResult GetBodega()
         {
             VM_Bodega objeto = new VM_Bodega();
-            return Json(new { Lista = objeto.ObtenerBodegas() }, JsonRequestBehavior.AllowGet);
+            return Json(new { Lista = objeto.ObtenerBodegas(), chang = "Changa" }, JsonRequestBehavior.AllowGet);
         }
 
 

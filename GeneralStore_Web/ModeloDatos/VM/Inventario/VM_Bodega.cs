@@ -88,6 +88,7 @@ namespace ModeloDatos.VM.Inventario
 
 
             lista = (from item in dataContext.Bodegas
+                     where item.IdBodega>0
                      select new VM_Bodega {
                          IdBodega = item.IdBodega,
                          Descripcion = item.Descripcion,
@@ -96,6 +97,7 @@ namespace ModeloDatos.VM.Inventario
                          Codigo = item.Codigo
                      }).ToList();
 
+            lista.Add(new VM_Bodega {IdBodega = 23645, Descripcion = "Esta es una descripcion",Nombre="Juansito Policarpio",Estado=true, Codigo= "Cod-546" });
             return lista;
 
         }

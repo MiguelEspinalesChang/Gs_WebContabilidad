@@ -10,24 +10,71 @@
 <script src="~/FrontEnd/DataTable/jquery.dataTables.js"></script>
 @*<script src="~/FrontEnd/DataTable/dataTables.bootstrap.min.js"></script>*@
 
-<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" id="appVue" style="overflow: auto">
+<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+    <div class="row" id="appVue" style="overflow: auto">
 
-    <div class="card">
-        <div class="card-header d-flex align-items-center">
-            <h2 class="h5 display">Tabla para Bodegas</h2>
+        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+            <button class="btn btn-primary" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
         </div>
-        <div class="card-block">
 
+        <div class="" v-bind:class="{ 'col-xs-12': estaCreando,'col-sm-8': estaCreando,'col-md-6': estaCreando,'col-lg-6': estaCreando, 'col-lg-12': creando }">
 
-            <tabla-noob :id-tabla="idTabla" :columnas-noob="columnasNoob" :data-noob="dataNoob">
+            <div class="card">
+                <div class="card-header d-flex align-items-center">
+                    <h2 class="h5 display">Tabla para Bodegas</h2>
+                </div>
+                <div class="card-block">
 
-            </tabla-noob>
+                    <tabla-noob v-bind:id-tabla="idTabla" v-bind:columnas-noob="columnasNoob" v-bind:data-noob="dataNoob">
+
+                    </tabla-noob>
+
+                </div>
+            </div>
 
         </div>
+
+        <div class="" v-show="estaCreando" v-bind:class="{ 'col-xs-12': estaCreando,'col-sm-4': estaCreando,'col-md-6': estaCreando,'col-lg-6': estaCreando  }">
+
+
+
+            <div class="card ">
+                <div class="card-header d-flex align-items-center">
+                    <h2 class="h5 display display">Agregar nueva Bodega</h2>
+                </div>
+                <div class="card-block">
+
+
+                    <div class="form-group">
+                        <label>Nombre: </label>
+                        <input type="text" placeholder="El nombre de la bodega" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Descripciòn: </label>
+                        <textarea class="form-control" rows="3" placeholder="La descripciòn de la bodega"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Codigo: </label>
+                        <input type="text" placeholder="Codigo de la bodega" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success pull-left"><i class="fa fa-save"></i> Guardar</button>
+                        <button class="btn btn-default pull-right" v-on:click="CerrarForm"><i class="fa fa-close" ></i> Cancelar</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
     </div>
 
-</div>
 
+</div>
 
 <script src="~/scripts/JS/Inventario/Bodega.js"></script>
 
