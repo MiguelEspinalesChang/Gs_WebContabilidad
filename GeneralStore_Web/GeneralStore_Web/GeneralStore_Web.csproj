@@ -181,6 +181,7 @@
     <Content Include="FrontEnd\bootstrap-dashboard\register.html" />
     <Content Include="FrontEnd\bootstrap-dashboard\tables.html" />
     <Content Include="FrontEnd\Chart.min.js" />
+    <Content Include="FrontEnd\CSS\Degradado.css" />
     <Content Include="FrontEnd\CSS\Principal.css" />
     <Content Include="FrontEnd\DataTable\dataTables.bootstrap.min.css" />
     <Content Include="FrontEnd\DataTable\dataTables.bootstrap.min.js" />

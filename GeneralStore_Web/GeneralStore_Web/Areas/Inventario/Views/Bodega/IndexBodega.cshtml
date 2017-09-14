@@ -4,24 +4,43 @@
     Layout = "~/Views/Compartida/_LayoutPrincipal.cshtml";
 }
 
+<link href="~/FrontEnd/CSS/Degradado.css" rel="stylesheet" />
+
 <link href="~/FrontEnd/DataTable/jquery.dataTables.css" rel="stylesheet" />
 @*<link href="~/FrontEnd/DataTable/dataTables.bootstrap.min.css" rel="stylesheet" />*@
 
 <script src="~/FrontEnd/DataTable/jquery.dataTables.js"></script>
 @*<script src="~/FrontEnd/DataTable/dataTables.bootstrap.min.js"></script>*@
 
-<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
-    <div class="row" id="appVue" style="overflow: auto">
+<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12" id="appVue">
 
-        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
-            <button class="btn btn-primary" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
-        </div>
+    <div class="row" style="margin-bottom:10px;">
 
-        <div class="" v-bind:class="{ 'col-xs-12': estaCreando,'col-sm-8': estaCreando,'col-md-6': estaCreando,'col-lg-6': estaCreando, 'col-lg-12': creando }">
+        <div class="col-xs-12 col-lg-12">
 
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <h2 class="h5 display">Tabla para Bodegas</h2>
+                    <button class="btn btn-default btn-defaultNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button class="btn btn-info btn-infoNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button class="btn btn-primary btn-primaryNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button class="btn btn-success btn-successNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button class="btn btn-success btn-warningNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button class="btn btn-success btn-dangerNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row" style="overflow: auto">
+
+        <div class="" v-bind:class="{ 'col-xs-12': estaCreando,'col-sm-8': estaCreando,'col-md-6': estaCreando,'col-lg-6': estaCreando, 'col-lg-12': creando }">
+
+            <div class="card ">
+                <div class="card-header cartaVerde d-flex align-items-center">
+                    <h2 class="h3 display colorBlanco">Bodegas: </h2>
                 </div>
                 <div class="card-block">
 
@@ -39,8 +58,8 @@
 
 
             <div class="card ">
-                <div class="card-header d-flex align-items-center">
-                    <h2 class="h5 display display">Agregar nueva Bodega</h2>
+                <div class="card-header cartaAgregar d-flex align-items-center">
+                    <h2 class="h3 display colorBlanco display">Agregar nueva Bodega: </h2>
                 </div>
                 <div class="card-block">
 
@@ -59,7 +78,7 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-success pull-left"><i class="fa fa-save"></i> Guardar</button>
-                        <button class="btn btn-default pull-right" v-on:click="CerrarForm"><i class="fa fa-close" ></i> Cancelar</button>
+                        <button class="btn btn-default pull-right" v-on:click="CerrarForm"><i class="fa fa-close"></i> Cancelar</button>
                     </div>
 
                 </div>

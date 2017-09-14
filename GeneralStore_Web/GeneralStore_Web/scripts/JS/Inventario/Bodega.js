@@ -1,5 +1,21 @@
 ﻿$(document).ready(function () {
 
+    //var alertasComponent = Vue.component("alertas-noob", {
+
+    //    template: [].join(''),
+    //    props: {
+    //        estado: {
+    //            type: Boolean,
+    //            required: true
+    //        },
+    //        accion: {
+    //            type: Integer,
+    //            required: false
+    //        }
+
+    //    }
+
+    //});
 
     var tablaNoobVar = Vue.component("tabla-noob", {
         /*	template: [
@@ -142,55 +158,26 @@
                 this.estaCreando = false;
             },
             RecargarTabla: function () {
-                //var random = Math.floor((Math.random() * 70) + 4);
 
-                /*var arregloNombre = [
-                    'Carazeña',
-                    'Loquera',
-                    'Alucin',
-                    'Ninja',
-                    'killa queen',
-                    'Naniiii',
-                    'Siuuuuu',
-                    'Trapitos',
-                    'Golazoo',
-                    'El nexo',
-                    'Taijutsu',
-                    'Robocop',
-                    'Chayo palo',
-                    'Antena',
-                    'Chun lee',
-                    'Chaman mejora',
-                    'Dk caster',
-                    'Caza melee',
-                    'Bootstrap',
-                    'que nootaa',
-                    'El chatel',
-                ];*/
+                fetch('/Inventario/Bodega/ObtenerTodo', {
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (json) {
+                    //if (json.Estado == false)
 
-                /*var codigos = [
-                    'Loq-',
-                    'Cod-',
-                    'Item-',
-                    'Bode-',
-                    'Gol-'
-                ];*/
+                    this.dataNoob = json.Lista;
+                }.bind(this));
 
-                /*for (var iii = 0; iii < random; iii++) {
-                    var randomNombre = Math.floor((Math.random() * 19) + 0);
-                    var randomCodigo = Math.floor((Math.random() * 4) + 0);
-                    var objeto44 = {
+            },
+            GuardarRegistro: function () {
 
-                        "IdBodega": "" + iii,
-                        "Nombre": "" + arregloNombre[randomNombre],
-                        "Descripcion": "" + codigos[randomCodigo] + "  ///^&&&$$  " + arregloNombre[randomNombre] + " %€£##*#&",
-                        "Codigo": "" + codigos[randomCodigo] + iii
-                    };
-                    this.dataNoob.push(objeto44);
-
-                }*/
-
-                fetch('/Inventario/Bodega/GetBodega', {
+                fetch('/Inventario/Bodega/Guardar', {
                     method: 'get',
                     headers: {
                         'Content-Type': 'application/json'
@@ -202,8 +189,6 @@
                 .then(function (json) {
                     this.dataNoob = json.Lista;
                 }.bind(this));
-
-                //tecnologia ajax
 
 
             }

@@ -17,10 +17,22 @@ namespace GeneralStore_Web.Areas.Inventario.Controllers
 
         ////// JSON METHODS
 
-        public JsonResult GetBodega()
+        public JsonResult ObtenerTodo()
         {
             VM_Bodega objeto = new VM_Bodega();
-            return Json(new { Lista = objeto.ObtenerBodegas(), chang = "Changa" }, JsonRequestBehavior.AllowGet);
+            List<VM_Bodega> lista = new List<VM_Bodega>();
+            bool estado = true;
+            try
+            {
+                lista = objeto.ObtenerBodegas();
+                estado = true;
+            }
+            catch(Exception e)
+            {
+                estado = false;
+            }
+
+            return Json(new { Lista = lista, Estado = estado }, JsonRequestBehavior.AllowGet);
         }
 
 
