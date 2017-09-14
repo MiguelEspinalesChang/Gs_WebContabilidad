@@ -36,6 +36,9 @@
             dataNoob: {
                 type: Array,
                 required: true
+            },
+            tablaDefinida: {
+                type: Object
             }
         },
         mounted() {
@@ -56,10 +59,22 @@
         watch: {
             dataNoob: function (val, oldVal) {
 
-                $('#' + this.idTabla).DataTable({
-                    data: this.dataNoob,
-                    columns: this.columnasNoob
-                });
+                if (this.tablaDefinida === undefined) {
+
+                    this.tablaDefinida = $('#' + this.idTabla).DataTable({
+                        data: this.dataNoob,
+                        columns: this.columnasNoob
+                    });
+
+                }
+                else
+                {
+                    this.tablaDefinida.clear();
+                    this.tablaDefinida.rows.add(val);
+                    this.tablaDefinida.draw();
+                }
+
+               
 
             }
         }
@@ -98,9 +113,9 @@
                 this.datosJson = JSON.stringify(this.dataNoob);
             },
             RecargarTabla: function () {
-                var random = Math.floor((Math.random() * 70) + 4);
+                //var random = Math.floor((Math.random() * 70) + 4);
 
-                var arregloNombre = [
+                /*var arregloNombre = [
                     'Carazeña',
                     'Loquera',
                     'Alucin',
@@ -122,17 +137,17 @@
                     'Bootstrap',
                     'que nootaa',
                     'El chatel',
-                ];
+                ];*/
 
-                var codigos = [
+                /*var codigos = [
                     'Loq-',
                     'Cod-',
                     'Item-',
                     'Bode-',
                     'Gol-'
-                ];
+                ];*/
 
-                for (var iii = 0; iii < random; iii++) {
+                /*for (var iii = 0; iii < random; iii++) {
                     var randomNombre = Math.floor((Math.random() * 19) + 0);
                     var randomCodigo = Math.floor((Math.random() * 4) + 0);
                     var objeto44 = {
@@ -144,7 +159,20 @@
                     };
                     this.dataNoob.push(objeto44);
 
-                }
+                }*/
+
+                fetch('/Inventario/Bodega/GetBodega', {
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(function (response) {
+
+                })
+                .then(function (json) {
+
+                }.bind(this));
 
 
             }
