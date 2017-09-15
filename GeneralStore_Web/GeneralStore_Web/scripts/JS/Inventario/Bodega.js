@@ -3,7 +3,7 @@
     var alertasComponent = Vue.component("alertas-noob", {
 
         template: [
-            '<div class="row" v-show="visibleAlerta">',
+            '<div class="row" v-show="visibleAlerta" >',
             '<div class="col-xs-12 col-lg-12">',
             '<div class="alert alert-dismissable animated zoomInUp" id="elementoAnimado" v-bind:class="clasesAlerta">',
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;',
@@ -160,7 +160,6 @@
         el: "#appVue",
         data: {
             estaCreando: false,
-            creando: true,
             idTabla: "jojojojo",
             columnasNoob: [
                 {
@@ -182,20 +181,29 @@
             estadoAlerta: false,
             accionAlerta: 0,
             textoAlerta: "",
-            visibleAlerta : false
+            visibleAlerta: false,
+            mNombre: "",
+            mDescripcion: "",
+            mCodigo: ""
         },
         mounted() {
             this.RecargarTabla()
         },
         methods: {
-            NuevaBodega: function () {
-                this.creando = (this.estaCreando) ? true : false;
-                this.estaCreando = (this.estaCreando) ? false : true;
-                
+            LimpiarVariables: function(){
+                this.mNombre = "",
+                this.mDescripcion = "",
+                this.mCodigo = ""
             },
-            CerrarForm: function(){
-                this.creando = true;
+            NuevaBodega: function () {
+                this.LimpiarVariables();
+                this.estaCreando = (this.estaCreando) ? false : true;
+                this.visibleAlerta = false;            
+            },
+            CerrarForm: function () {
+                this.LimpiarVariables();
                 this.estaCreando = false;
+                this.visibleAlerta = false;
             },
             RecargarTabla: function () {
 
@@ -243,7 +251,38 @@
 
 
             }
-        }
+        },
+        computed: {
+            clasesCard: function () {
+                return {
+                    'col-xs-12 col-sm-12 col-md-6 col-lg-6': this.estaCreando,
+
+                    'col-xs-12 col-sm-12 col-md-12 col-lg-12': this.estaCreando == false,
+                }
+            },
+            clasesAnimacion: function () {
+                var arrayAnimaciones = [
+                    "jackInTheBox",
+                    "rollIn",
+                    "flipInX",
+                    "fadeInUp",
+                    "pulse",
+                    "lightSpeedIn",
+                    "flipinY",
+                    "fadeInRight"
+                ]
+
+                var clase = arrayAnimaciones[Math.floor((Math.random() * 7) + 0)];
+
+                return { 
+                    'animated jackInTheBox': this.estaCreando,
+
+                    '': this.estaCreando == false,
+                }
+            }
+        },
+
+
     });
 
     $('#example').DataTable();
