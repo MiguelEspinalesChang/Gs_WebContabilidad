@@ -134,6 +134,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FrontEnd\animate.css" />
     <Content Include="FrontEnd\bootstrap-dashboard\charts.html" />
     <Content Include="FrontEnd\bootstrap-dashboard\credits.txt" />
     <Content Include="FrontEnd\bootstrap-dashboard\css\bootstrap.css" />

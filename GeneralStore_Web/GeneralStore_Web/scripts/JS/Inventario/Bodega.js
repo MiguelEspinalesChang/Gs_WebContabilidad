@@ -1,21 +1,57 @@
 ﻿$(document).ready(function () {
 
-    //var alertasComponent = Vue.component("alertas-noob", {
+    var alertasComponent = Vue.component("alertas-noob", {
 
-    //    template: [].join(''),
-    //    props: {
-    //        estado: {
-    //            type: Boolean,
-    //            required: true
-    //        },
-    //        accion: {
-    //            type: Integer,
-    //            required: false
-    //        }
+        template: [
+            '<div class="row" v-show="visibleAlerta">',
+            '<div class="col-xs-12 col-lg-12">',
+            '<div class="alert alert-dismissable animated zoomInUp" id="elementoAnimado" v-bind:class="clasesAlerta">',
+            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;',
+            '</a>',
+            '<strong>{{textoAlerta}}',
+            '</strong>',
+            '</div>',
+            '</div>',
+            '</div>'
+        ].join(''),
+        props: {
+            estadoAlerta: {
+                type: Boolean,
+                required: true
+            },
+            accionAlerta: {
+                type: Number,
+                required: true
+            },
+            textoAlerta: {
+                type: String,
+                required: true
+            },
+            visibleAlerta: {
+                type: Boolean,
+                required: true
+            }
 
-    //    }
+        },
+        computed: {
+            clasesAlerta: function () {
+            return {
+                'alert-success': this.accionAlerta == 1 && this.estadoAlerta == false,
+                'alert-danger': this.accionAlerta == 1 && this.estadoAlerta == true,
+            }
+        }
+},
+        watch: {
 
-    //});
+            visibleAlerta: function (val, oldVal) {
+
+             
+
+
+            }
+        }
+
+    })
 
     var tablaNoobVar = Vue.component("tabla-noob", {
         /*	template: [
@@ -142,7 +178,11 @@
             ],
             dataNoob: [],
             total: 0,
-            datosJson: []
+            datosJson: [],
+            estadoAlerta: false,
+            accionAlerta: 0,
+            textoAlerta: "",
+            visibleAlerta : false
         },
         mounted() {
             this.RecargarTabla()
@@ -169,9 +209,20 @@
                     return response.json();
                 })
                 .then(function (json) {
-                    //if (json.Estado == false)
 
-                    this.dataNoob = json.Lista;
+                    this.textoAlerta = "jejeedsfsd sdfsdf"
+                    this.accionAlerta = 1;
+                    if (json.Estado == false)
+                    {
+                        this.estadoAlerta = false;
+                        this.textoAlerta = "jejee"
+                    }
+                    else {
+                        this.dataNoob = json.Lista;
+                    }
+
+                    this.visibleAlerta = true;
+
                 }.bind(this));
 
             },

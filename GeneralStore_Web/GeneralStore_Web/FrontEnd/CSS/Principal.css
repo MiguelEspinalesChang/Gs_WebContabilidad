@@ -4,22 +4,73 @@
 
 }
 
-.btn-infoNoob{
+.btn-defaultNoob{
+    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+.btn-defaultNoob:hover{
+    background-image: linear-gradient(to top, #cfd9df 0%, #cfd9df 100%);
+
+}
+
+#elementoAnimado {
+  -webkit-animation-duration: 1s;
+  -webkit-animation-delay: 0.2s;
+  -webkit-animation-iteration-count: 1;
+  -moz-animation-duration: 3s;
+  -moz-animation-delay: 0.2s;
+  -moz-animation-iteration-count: 1;
+}
+
+/*.btn-infoNoob{
     background-image: linear-gradient(to top, #4481eb 0%, #04befe 100%);
+        border: none !important;
 }
 .btn-defaultNoob{
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%) !important;
+        border: none !important;
 }
 .btn-primaryNoob{
     background-image: linear-gradient(to top, #0c3483 0%, #a2b6df 100%, #6b8cce 100%, #a2b6df 100%);
+        border: none !important;
 }
 .btn-successNoob{
-    background-image: linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%);
+   background-image: linear-gradient(-10deg, #16a085 0%, #f4d03f 100%);
+        border: none !important;
 }
+
 .btn-dangerNoob{
    background-image: linear-gradient(to top, #ff0844 0%, #ffb199 100%);
+       border: none !important;
 }
 .btn-warningNoob{
     background-image: linear-gradient(to top, #e14fad 0%, #f9d423 100%);
+        border: none !important;
 }
+
+.btn-infoNoob:hover{
+    background-image: linear-gradient(to top, #04befe 0%, #4481eb 100%);
+    border: #4481eb !important;
+}
+.btn-primaryNoob:hover{
+    background-image: linear-gradient(to top, #a2b6df 0%, #a2b6df  100%, #6b8cce 100%,#0c3483  100%);
+        border: #0c3483 !important;
+}
+.btn-defaultNoob:hover{
+    background-image: linear-gradient(to top,#e2ebf0  0%, #cfd9df 100%) !important;
+        border: #cfd9df !important;
+}
+.btn-successNoob:hover{
+   background-image: linear-gradient(-10deg, #f4d03f 0%, #16a085 100%);
+        border: #16a085 !important;
+}
+
+.btn-dangerNoob:hover{
+   background-image: linear-gradient(to top, #ffb199 0%, #ff0844 100%);
+       border: #ff0844 !important;
+}
+
+.btn-warningNoob:hover{
+    background-image: linear-gradient(to top,#f9d423 0%,  #e14fad 100%);
+        border:  #e14fad !important;
+}*/
 

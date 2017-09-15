@@ -4,6 +4,8 @@
     Layout = "~/Views/Compartida/_LayoutPrincipal.cshtml";
 }
 
+<link href="~/FrontEnd/animate.css" rel="stylesheet" />
+
 <link href="~/FrontEnd/CSS/Degradado.css" rel="stylesheet" />
 
 <link href="~/FrontEnd/DataTable/jquery.dataTables.css" rel="stylesheet" />
@@ -14,6 +16,11 @@
 
 <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12" id="appVue">
 
+    @*<alertas-noob v-bind:estado-Alerta="estadoAlerta" v-bind:visible-Alerta="visibleAlerta"
+                   v-bind:accion-Alerta="accionAlerta" v-bind:texto-Alerta="textoAlerta">
+
+    </alertas-noob>*@ 
+
     <div class="row" style="margin-bottom:10px;">
 
         <div class="col-xs-12 col-lg-12">
@@ -21,12 +28,6 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center">
                     <button class="btn btn-default btn-defaultNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
-                    <button class="btn btn-info btn-infoNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
-                    <button class="btn btn-primary btn-primaryNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
-                    <button class="btn btn-success btn-successNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
-                    <button class="btn btn-success btn-warningNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
-                    <button class="btn btn-success btn-dangerNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
-
                 </div>
             </div>
 
@@ -78,7 +79,7 @@
                     </div>
                     <div class="form-group">
                         <button class="btn btn-success pull-left"><i class="fa fa-save"></i> Guardar</button>
-                        <button class="btn btn-default pull-right" v-on:click="CerrarForm"><i class="fa fa-close"></i> Cancelar</button>
+                        <button class="btn btn-default pull-right btn-defaultNoob" v-on:click="CerrarForm"><i class="fa fa-close"></i> Cancelar</button>
                     </div>
 
                 </div>
