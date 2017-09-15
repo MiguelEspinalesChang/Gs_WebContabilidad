@@ -201,7 +201,9 @@
     <Content Include="FrontEnd\images\sort_desc_disabled.png" />
     <Content Include="FrontEnd\jquery-3.2.1.min.js" />
     <Content Include="FrontEnd\jquery.min.js" />
+    <Content Include="FrontEnd\validators.min.js" />
     <Content Include="FrontEnd\vue.js" />
+    <Content Include="FrontEnd\vuelidate.min.js" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />

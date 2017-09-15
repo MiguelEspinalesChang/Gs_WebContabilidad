@@ -1,6 +1,7 @@
 ﻿using ModeloDatos.BaseDatos;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,96 +10,199 @@ namespace ModeloDatos.VM.Inventario
 {
     public class VM_Bodega
     {
-
-        private int idBodega;
-        private string descripcion;
-        private string nombre;
-        private string codigo;
-        private bool estado;
-
-        public int IdBodega
+        public class ObjetosBodega
         {
-            get
+            private int idBodega;
+            private string descripcion;
+            private string nombre;
+            private string codigo;
+            private bool estado;
+            private bool esNuevo;
+            private bool peticion;
+
+            public int IdBodega
             {
-                return idBodega;
+                get
+                {
+                    return idBodega;
+                }
+
+                set
+                {
+                    idBodega = value;
+                }
             }
 
-            set
+            public string Descripcion
             {
-                idBodega = value;
+                get
+                {
+                    return descripcion;
+                }
+
+                set
+                {
+                    descripcion = value;
+                }
+            }
+
+            public string Nombre
+            {
+                get
+                {
+                    return nombre;
+                }
+
+                set
+                {
+                    nombre = value;
+                }
+            }
+
+            public string Codigo
+            {
+                get
+                {
+                    return codigo;
+                }
+
+                set
+                {
+                    codigo = value;
+                }
+            }
+
+            public bool Estado
+            {
+                get
+                {
+                    return estado;
+                }
+
+                set
+                {
+                    estado = value;
+                }
+            }
+
+            public bool EsNuevo
+            {
+                get
+                {
+                    return esNuevo;
+                }
+
+                set
+                {
+                    esNuevo = value;
+                }
             }
         }
 
-        public string Descripcion
+
+        public class Json_Bodega
         {
-            get
+
+            private List<ObjetosBodega> lista;
+            private bool peticion;
+
+            public List<ObjetosBodega> Lista
             {
-                return descripcion;
+                get
+                {
+                    return lista;
+                }
+
+                set
+                {
+                    lista = value;
+                }
             }
 
-            set
+            public bool Peticion
             {
-                descripcion = value;
+                get
+                {
+                    return peticion;
+                }
+
+                set
+                {
+                    peticion = value;
+                }
             }
         }
 
-        public string Nombre
-        {
-            get
-            {
-                return nombre;
-            }
-
-            set
-            {
-                nombre = value;
-            }
-        }
-
-        public string Codigo
-        {
-            get
-            {
-                return codigo;
-            }
-
-            set
-            {
-                codigo = value;
-            }
-        }
-
-        public bool Estado
-        {
-            get
-            {
-                return estado;
-            }
-
-            set
-            {
-                estado = value;
-            }
-        }
         private DB_A2A2D5_GsContabilidadEntities dataContext = new DB_A2A2D5_GsContabilidadEntities();
 
-        public List<VM_Bodega> ObtenerBodegas()
+        public Json_Bodega ObtenerBodegas()
         {
-            List<VM_Bodega> lista = new List<VM_Bodega>();
+            Json_Bodega lista = new Json_Bodega();
 
 
-            lista = (from item in dataContext.Bodegas
-                     where item.IdBodega>0
-                     select new VM_Bodega {
-                         IdBodega = item.IdBodega,
-                         Descripcion = item.Descripcion,
-                         Nombre = item.Nombre,
-                         Estado = item.Estado,
-                         Codigo = item.Codigo
-                     }).ToList();
+            try
+            {
+                lista.Lista = (from item in dataContext.Bodegas
+                         where item.IdBodega > 0
+                         select new ObjetosBodega
+                         {
+                             IdBodega = item.IdBodega,
+                             Descripcion = item.Descripcion,
+                             Nombre = item.Nombre,
+                             Estado = item.Estado,
+                             Codigo = item.Codigo
+                         }).ToList();
 
-            lista.Add(new VM_Bodega {IdBodega = 23645, Descripcion = "Esta es una descripcion",Nombre="Juansito Policarpio",Estado=true, Codigo= "Cod-546" });
+                lista.Peticion = true;
+
+            }catch(Exception e)
+            {
+                lista.Lista = new List<ObjetosBodega>();
+                lista.Peticion = true;
+            }
             return lista;
+
+        }
+
+        public bool Guardar(ObjetosBodega datos)
+        {
+            
+            Bodega registro = new Bodega();
+            bool peticion = false;
+            registro.Nombre = datos.Nombre;
+            registro.Descripcion = datos.Descripcion;
+            registro.Codigo = datos.Codigo;
+
+            if(datos.EsNuevo)
+            {
+                try
+                {
+                    dataContext.Bodegas.Add(registro);
+                    dataContext.SaveChanges();
+                    peticion = true;
+                }
+                catch(Exception e)
+                {
+                    peticion = false;
+                }
+                
+            }
+            else
+            {
+                try
+                {
+                    dataContext.Entry(registro).State = EntityState.Modified;
+                    dataContext.SaveChanges();
+                    peticion = true;
+                }
+                catch (Exception e)
+                {
+                    peticion = false;
+                }
+
+            }
+
+            return peticion;
 
         }
 

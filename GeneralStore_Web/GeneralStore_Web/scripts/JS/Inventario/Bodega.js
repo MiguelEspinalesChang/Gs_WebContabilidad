@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
 
+
     var alertasComponent = Vue.component("alertas-noob", {
 
         template: [
@@ -35,17 +36,17 @@
         },
         computed: {
             clasesAlerta: function () {
-            return {
-                'alert-success': this.accionAlerta == 1 && this.estadoAlerta == false,
-                'alert-danger': this.accionAlerta == 1 && this.estadoAlerta == true,
+                return {
+                    'alert-success': this.accionAlerta == 1 && this.estadoAlerta == false,
+                    'alert-danger': this.accionAlerta == 1 && this.estadoAlerta == true,
+                }
             }
-        }
-},
+        },
         watch: {
 
             visibleAlerta: function (val, oldVal) {
 
-             
+
 
 
             }
@@ -54,28 +55,13 @@
     })
 
     var tablaNoobVar = Vue.component("tabla-noob", {
-        /*	template: [
-            '<table :id="idTabla">',
-            '<thead>',
-            '<tr>',
-            '<td :v-for="colN in columnasNoob">',
-            '{{colN.nombre}}'
-            '</td>',
-            '</tr>',
-            '</thead>',
-            '<tbody>',
-            '<tr :v-for="filaN in dataNoob">',
-                '<td>',
-                '',
-                ,'</td>',
-            '</tr>',
-            '</tbody>',
-            '</table>'
-            ].join(''),*/
         template: [
             '<table :id="idTabla" class="table table-striped table-hover"  style="width=100%" cellspacing="0">',
             '</table>'
         ].join(''),
+        data: {
+            tablaDefinida: {}
+        },
         props: {
             idTabla: {
                 type: String,
@@ -88,9 +74,6 @@
             dataNoob: {
                 type: Array,
                 required: true
-            },
-            tablaDefinida: {
-                type: Object
             }
         },
         mounted() {
@@ -98,14 +81,24 @@
         },
         methods: {
             CrearTabla: function () {
-                //	$("#"+this.idTabla).DataTable();
-                //	$('#'+this.idTabla).DataTable( {
-                //	data: this.dataNoob,
-                //	columns: this.columnasNoob
-                //	} );
 
-                //	$("#"+this.idTabla).addClass("jeje");
-                //	alert($("#"+this.idTabla).size());
+            },
+            FormatoColumnas: () => {
+
+                let lista = [];
+                let objeto = {}
+                $.each(this.columnasNoob, function (value, key) {
+
+                    objeto = {
+                        "data": "" + value
+                    }
+
+                    lista.push(objeto);
+
+
+                });
+
+                return lista;
             }
         },
         watch: {
@@ -140,13 +133,18 @@
                         },
                         "data": this.dataNoob,
                         "columns": this.columnasNoob
+
                     });
+
+                    this.tablaDefinida.columns().visible();
 
                 }
                 else {
                     this.tablaDefinida.clear();
-                    this.tablaDefinida.rows.add(val);
+                    if (val !== undefined)
+                        this.tablaDefinida.rows.add(val);
                     this.tablaDefinida.draw();
+                    this.tablaDefinida.columns().visible();
                 }
 
 
@@ -160,19 +158,29 @@
         el: "#appVue",
         data: {
             estaCreando: false,
+            estaGuardando: false,
+            esNuevo: true,
             idTabla: "jojojojo",
             columnasNoob: [
                 {
-                    data: "IdBodega"
+                    "data": "IdBodega",
+                    "title": "Id Bodega",
+                    "width": "15%"
                 },
                 {
-                    data: "Nombre"
+                    "data": "Nombre",
+                    "title": "Nombre",
+                    "width": "30%"
                 },
                 {
-                    data: "Descripcion"
+                    "data": "Descripcion",
+                    "title": "Descripción",
+                    "width": "40%"
                 },
                 {
-                    data: "Codigo"
+                    "data": "Codigo",
+                    "title": "Código",
+                    "width": "15%"
                 }
             ],
             dataNoob: [],
@@ -187,10 +195,13 @@
             mCodigo: ""
         },
         mounted() {
+            $("#appVue").toggle("fast", function () {
+                // Animation complete.
+            });
             this.RecargarTabla()
         },
         methods: {
-            LimpiarVariables: function(){
+            LimpiarVariables: function () {
                 this.mNombre = "",
                 this.mDescripcion = "",
                 this.mCodigo = ""
@@ -198,7 +209,8 @@
             NuevaBodega: function () {
                 this.LimpiarVariables();
                 this.estaCreando = (this.estaCreando) ? false : true;
-                this.visibleAlerta = false;            
+                this.visibleAlerta = false;
+                this.esNuevo = true;
             },
             CerrarForm: function () {
                 this.LimpiarVariables();
@@ -220,8 +232,7 @@
 
                     this.textoAlerta = "jejeedsfsd sdfsdf"
                     this.accionAlerta = 1;
-                    if (json.Estado == false)
-                    {
+                    if (json.Estado == false) {
                         this.estadoAlerta = false;
                         this.textoAlerta = "jejee"
                     }
@@ -234,19 +245,28 @@
                 }.bind(this));
 
             },
-            GuardarRegistro: function () {
+            GuardarBodega: function () {
 
+                this.estaGuardando = true;
                 fetch('/Inventario/Bodega/Guardar', {
-                    method: 'get',
+                    method: 'post',
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify({
+                        Nombre: this.mNombre,
+                        Descripcion: this.mDescripcion,
+                        Codigo: this.mCodigo,
+                        EsNuevo: this.esNuevo
+                    })
                 })
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (json) {
                     this.dataNoob = json.Lista;
+                    this.estaGuardando = false;
+                    this.estaCreando = false;
                 }.bind(this));
 
 
@@ -274,16 +294,17 @@
 
                 var clase = arrayAnimaciones[Math.floor((Math.random() * 7) + 0)];
 
-                return { 
+                return {
                     'animated jackInTheBox': this.estaCreando,
 
                     '': this.estaCreando == false,
                 }
+
+
             }
         },
 
 
     });
 
-    $('#example').DataTable();
 });

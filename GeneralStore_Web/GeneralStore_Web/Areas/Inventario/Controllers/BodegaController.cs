@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static ModeloDatos.VM.Inventario.VM_Bodega;
 
 namespace GeneralStore_Web.Areas.Inventario.Controllers
 {
@@ -20,19 +21,26 @@ namespace GeneralStore_Web.Areas.Inventario.Controllers
         public JsonResult ObtenerTodo()
         {
             VM_Bodega objeto = new VM_Bodega();
-            List<VM_Bodega> lista = new List<VM_Bodega>();
-            bool estado = true;
-            try
-            {
-                lista = objeto.ObtenerBodegas();
-                estado = true;
-            }
-            catch(Exception e)
-            {
-                estado = false;
-            }
+            Json_Bodega registros = new Json_Bodega();
 
-            return Json(new { Lista = lista, Estado = estado }, JsonRequestBehavior.AllowGet);
+            registros = objeto.ObtenerBodegas();
+
+
+            return Json(new { Lista = registros.Lista, Estado = registros.Peticion }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Guardar(ObjetosBodega datos)
+        {
+            VM_Bodega objeto = new VM_Bodega();
+            bool peticion = objeto.Guardar(datos);
+            Json_Bodega registros = new Json_Bodega();
+            registros = objeto.ObtenerBodegas();
+
+            return Json(new {
+                Lista = registros.Lista,
+                Estado = registros.Peticion,
+                Peticion = peticion
+            },JsonRequestBehavior.AllowGet);
         }
 
 

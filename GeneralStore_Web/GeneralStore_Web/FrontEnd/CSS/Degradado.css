@@ -1,13 +1,33 @@
 ﻿.cartaVerde
 {
-/*background-image: linear-gradient(to top, #37ecba 0%, #72afd3 100%);*/
-background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898; 
-background-blend-mode: multiply,multiply;
+    background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%) !important;
 }
 
 .cartaAgregar{
     background-image: linear-gradient(to top, #6a85b6 0%, #bac8e0 100%);
+}
 
+.dataTable > thead > tr{
+
+    background-image: linear-gradient(to right, #243949 0%, #517fa4 100%) !important;
+}
+
+.dataTable > thead > tr > th{
+
+color: white !important;
+
+}
+
+nav.side-navbar li.active a{
+    background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%) !important;
+}
+
+nav.side-navbar li a:hover{
+    background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%) !important;
+}
+
+nav.side-navbar a{
+    font-weight: 500 !important;
 }
 
 

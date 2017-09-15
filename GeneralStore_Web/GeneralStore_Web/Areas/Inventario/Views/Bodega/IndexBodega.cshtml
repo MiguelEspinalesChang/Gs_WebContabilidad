@@ -10,11 +10,10 @@
 
 <link href="~/FrontEnd/DataTable/jquery.dataTables.css" rel="stylesheet" />
 @*<link href="~/FrontEnd/DataTable/dataTables.bootstrap.min.css" rel="stylesheet" />*@
-
 <script src="~/FrontEnd/DataTable/jquery.dataTables.js"></script>
 @*<script src="~/FrontEnd/DataTable/dataTables.bootstrap.min.js"></script>*@
 
-<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12" id="appVue">
+<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12" id="appVue" style="display:none">
 
    @*<alertas-noob v-bind:estado-Alerta="estadoAlerta" v-bind:visible-Alerta="visibleAlerta"
                    v-bind:accion-Alerta="accionAlerta" v-bind:texto-Alerta="textoAlerta">
@@ -27,7 +26,7 @@
 
             <div class="card">
                 <div class="card-header d-flex align-items-center">
-                    <button class="btn btn-default btn-defaultNoob" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
+                    <button class="btn btn-primary" v-bind:disabled="estaCreando" v-on:click="NuevaBodega"><i class="fa fa-plus"></i> Nuevo</button>
                 </div>
             </div>
 
@@ -67,19 +66,24 @@
 
                     <div class="form-group">
                         <label>Nombre: </label>
-                        <input type="text" v-model="mNombre" placeholder="El nombre de la bodega" class="form-control">
+                        <input type="text" v-model="mNombre" v-bind:disabled="estaGuardando" placeholder="El nombre de la bodega" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Descripciòn: </label>
-                        <textarea class="form-control"v-model="mDescripcion" rows="3" placeholder="La descripciòn de la bodega"></textarea>
+                        <textarea class="form-control" v-model="mDescripcion" v-bind:disabled="estaGuardando" rows="3" placeholder="La descripciòn de la bodega"></textarea>
                     </div>
                     <div class="form-group">
                         <label>Codigo: </label>
-                        <input type="text" v-model="mCodigo" placeholder="Codigo de la bodega" class="form-control">
+                        <input type="text" v-model="mCodigo" v-bind:disabled="estaGuardando" placeholder="Codigo de la bodega" class="form-control">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-success pull-left"><i class="fa fa-save"></i> Guardar</button>
-                        <button class="btn btn-default pull-right btn-defaultNoob" v-on:click="CerrarForm"><i class="fa fa-close"></i> Cancelar</button>
+                        <button class="btn btn-success pull-left" v-show="!estaGuardando"
+                                 v-on:click="GuardarBodega" 
+                                 v-bind:disabled="estaGuardando || mNombre.length < 1 || mDescripcion.length < 1 || mCodigo.length < 1"
+                                
+                                ><i class="fa fa-save"></i> Guardar</button>
+                        <button class="btn btn-info pull-left disabled" v-show="estaGuardando"><i class="fa fa-upload"></i> Guardando . . .</button>
+                        <button class="btn btn-default pull-right btn-defaultNoob" v-on:click="CerrarForm" v-bind:disabled="estaGuardando"><i class="fa fa-close"></i> Cancelar</button>
                     </div>
 
                 </div>
