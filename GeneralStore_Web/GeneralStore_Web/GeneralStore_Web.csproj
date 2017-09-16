@@ -186,6 +186,7 @@
     <Content Include="FrontEnd\CSS\Principal.css" />
     <Content Include="FrontEnd\DataTable\dataTables.bootstrap.min.css" />
     <Content Include="FrontEnd\DataTable\dataTables.bootstrap.min.js" />
+    <Content Include="FrontEnd\DataTable\dataTables.select.min.js" />
     <Content Include="FrontEnd\DataTable\jquery.dataTables.css" />
     <Content Include="FrontEnd\DataTable\jquery.dataTables.js" />
     <Content Include="FrontEnd\font-awesome-4.7.0\css\font-awesome.css" />

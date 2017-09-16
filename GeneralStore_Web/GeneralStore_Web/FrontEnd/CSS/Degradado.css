@@ -7,6 +7,10 @@
     background-image: linear-gradient(to top, #6a85b6 0%, #bac8e0 100%);
 }
 
+.cartaEditar{
+   background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
 .dataTable > thead > tr{
 
     background-image: linear-gradient(to right, #243949 0%, #517fa4 100%) !important;

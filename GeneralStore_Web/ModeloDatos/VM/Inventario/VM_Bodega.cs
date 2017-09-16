@@ -172,6 +172,7 @@ namespace ModeloDatos.VM.Inventario
             registro.Nombre = datos.Nombre;
             registro.Descripcion = datos.Descripcion;
             registro.Codigo = datos.Codigo;
+            registro.IdBodega = datos.IdBodega;
 
             if(datos.EsNuevo)
             {
@@ -191,9 +192,26 @@ namespace ModeloDatos.VM.Inventario
             {
                 try
                 {
-                    dataContext.Entry(registro).State = EntityState.Modified;
-                    dataContext.SaveChanges();
-                    peticion = true;
+                    Bodega registroBD = new Bodega();
+                    registroBD = (from item in dataContext.Bodegas
+                                  where item.IdBodega == registro.IdBodega
+                                  select item).FirstOrDefault();
+
+                    if (registroBD != null)
+                    {
+                        registroBD.Nombre = registro.Nombre;
+                        registroBD.Descripcion = registro.Descripcion;
+                        registroBD.Codigo = registro.Codigo;
+
+                        dataContext.Entry(registroBD).State = EntityState.Modified;
+                        dataContext.SaveChanges();
+                        peticion = true;
+                    }
+                    else
+                        peticion = false;
+
+
+
                 }
                 catch (Exception e)
                 {
