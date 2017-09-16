@@ -75,6 +75,13 @@
             '<h2 class="h3 display text-danger text-center"><i class="fa fa-warning"></i> ERROR AL CARGAR DATOS A LA TABLA !! </h2>',
             '</div>',
             '</div>',
+            '<div class="row" v-show="dataNoob.length>0" >',
+            '<div class="col-xs-12 col-lg-12" style="margin-bottom: 20px !important; margin-top: 6px !important">',
+            '<button class="btn btn-sm btn-primary botonesDataTable" v-on:click="NuevoRegistro" v-bind:disabled="estaCreando"><i class="fa fa-plus-o"></i> Agregar </button>',
+            '<button class="btn btn-sm btn-warning botonesDataTable"><i class="fa fa-edit"></i> Editar </button>',
+            '<button class="btn btn-sm btn-danger botonesDataTable"><i class="fa fa-trash"></i> Eliminar </button>',
+            '</div>',
+            '</div>',
             '<table :id="idTabla" class="table table-striped table-hover"  style="width=100%" cellspacing="0">',
             '</table>',
             '</div>'
@@ -98,31 +105,24 @@
             errorDataNoob: {
                 type: Boolean,
                 required: true
+            },
+            estaCreando: {
+                type: Boolean,
+                required: true
             }
         },
         mounted() {
-            this.CrearTabla()
+            
         },
         methods: {
-            CrearTabla: function () {
-
+            EliminarRegistro: function () {
+                alert("WEYYYYYYYYYYY");
             },
-            FormatoColumnas: () => {
-
-                let lista = [];
-                let objeto = {}
-                $.each(this.columnasNoob, function (value, key) {
-
-                    objeto = {
-                        "data": "" + value
-                    }
-
-                    lista.push(objeto);
-
-
-                });
-
-                return lista;
+            EditarRegistro: function () {
+                alert("WEYYYYYYYYYYY 2222222");
+            },
+            NuevoRegistro: function () {
+                this.$emit('trapito',1);
             }
         },
         watch: {
@@ -161,6 +161,7 @@
                     });
 
                     this.tablaDefinida.columns().visible();
+                    this.tablaDefinida.columns().add
 
                 }
                 else {
@@ -205,7 +206,19 @@
                     "data": "Codigo",
                     "title": "Código",
                     "width": "15%"
-                }
+                },
+                //{
+                //    "data": null,
+                //    "title": "Editar",
+                //    "defaultContent": '<button v-on:click="EditarRegistro" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i>Editar</button>',
+                //    "orderable": false
+                //},
+                //{
+                //    "data": null,
+                //    "title": "Eliminar",
+                //    "defaultContent": '<button v-on:click="EliminarRegistro" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i>Eliminar</button>',
+                //    "orderable": false
+                //}
             ],
             dataNoob: [],
             errorDataNoob: false,
@@ -230,7 +243,7 @@
                 this.mDescripcion = "",
                 this.mCodigo = ""
             },
-            NuevaBodega: function () {
+            NuevoRegistroNoob: function () {
                 this.LimpiarVariables();
                 this.estaCreando = (this.estaCreando) ? false : true;
                 this.visibleAlerta = false;

@@ -20,7 +20,7 @@
 
     </alertas-noob>
 
-    <div class="row" style="margin-bottom:10px;">
+    @*<div class="row" style="margin-bottom:10px;">
 
         <div class="col-xs-12 col-lg-12">
 
@@ -34,7 +34,7 @@
 
         </div>
 
-    </div>
+    </div>*@
 
     <div class="row">
 
@@ -49,7 +49,9 @@
                     <tabla-noob v-bind:id-tabla="idTabla" 
                                 v-bind:columnas-noob="columnasNoob" 
                                 v-bind:data-noob="dataNoob"
-                                v-bind:error-Data-Noob="errorDataNoob">
+                                v-bind:error-Data-Noob="errorDataNoob"
+                                @@trapito="NuevoRegistroNoob"
+                                v-bind:esta-Creando="estaCreando" >
 
                     </tabla-noob>
 
