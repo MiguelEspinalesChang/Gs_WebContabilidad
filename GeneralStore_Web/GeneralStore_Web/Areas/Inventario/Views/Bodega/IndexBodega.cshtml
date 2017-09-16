@@ -51,9 +51,11 @@
                                 v-bind:columnas-noob="columnasNoob" 
                                 v-bind:data-noob="dataNoob"
                                 v-bind:error-Data-Noob="errorDataNoob"
-                                @@agregar="NuevoRegistroNoob"
-                                @@editar="EditarRegistroNoob"
+                                v-bind:error-Server="errorServer"
+                                v-bind:peticion-Server="peticionServer"
                                 v-bind:esta-Creando="estaCreando"
+                                @@agregar="NuevoRegistroNoob"
+                                @@editar="EditarRegistroNoob"  
                                  >
 
                     </tabla-noob>

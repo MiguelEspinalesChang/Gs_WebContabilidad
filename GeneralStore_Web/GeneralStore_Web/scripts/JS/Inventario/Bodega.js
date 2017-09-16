@@ -9,15 +9,17 @@
             '<div v-show="visibleAlerta" class="alert alert-dismissable animated zoomInUp" id="elementoAnimado" v-bind:class="clasesAlerta">',
                 '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;',
             '</a>',
-            '<strong v-show="mensajeErrorTabla"><i class="fa fa-danger"></i> Error al cargar los datos en la tabla',
+            '<strong v-show="mensajeErrorTabla"><i class="fa fa-exclamation-circle"></i> Error al cargar los datos en la tabla',
             '</strong>',
-            '<strong v-show="mensajeDatoGuardado" ><i class="fa fa-save"></i> Dato guardado con exito',
+            '<strong v-show="mensajeDatoGuardado" ><i class="fa fa-upload"></i> Dato guardado con éxito',
             '</strong>',
-            '<strong v-show="mensajeDatoEliminado" ><i class="fa fa-trash-o"></i> Dato eliminado con exito',
+            '<strong v-show="mensajeDatoEliminado" ><i class="fa fa-trash-o"></i> Dato eliminado con éxito',
             '</strong>',
-            '<strong v-show="mensajeDatoActualizado" ><i class="fa fa-edit"></i> Dato actualizado con exito',
+            '<strong v-show="mensajeDatoActualizado" ><i class="fa fa-edit"></i> Dato actualizado con éxito',
             '</strong>',
-            '<strong v-show="mensajeErrorDato" ><i class="fa fa-danger"></i> ERROR EN LA PETICION',
+            '<strong v-show="mensajeErrorDato" ><i class="fa fa-exclamation-triangle"></i> Error en la petición, por favor revise los datos',
+            '</strong>',
+            '<strong v-show="mensajeErrorServer" ><i class="fa fa-exclamation"></i> Error en el servidor, por favor recargue la página !!',
             '</strong>',
             '</div>',
             '</div>',
@@ -28,7 +30,8 @@
             mensajeDatoGuardado: false,
             mensajeDatoEliminado: false,
             mensajeDatoActualizado: false,
-            mensajeErrorDato: false
+            mensajeErrorDato: false,
+            mensajeErrorServer: false
         },
         props: {
             estadoAlerta: {
@@ -57,11 +60,12 @@
 
             visibleAlerta: function (val, oldVal) {
 
-                this.mensajeErrorTabla = (this.estadoAlerta == false && this.accionAlerta == 1) ? true : false;
+                this.mensajeErrorTabla = (this.estadoAlerta == false && this.accionAlerta == 1 || this.accionAlerta == 500) ? true : false;
                 this.mensajeDatoGuardado = (this.estadoAlerta == true && this.accionAlerta == 0) ? true : false;
                 this.mensajeDatoEliminado = (this.estadoAlerta == true && this.accionAlerta == 3) ? true : false;
                 this.mensajeDatoActualizado = (this.estadoAlerta == true && this.accionAlerta == 2) ? true : false;
-                this.mensajeErrorDato = (this.estadoAlerta == false && this.accionAlerta != 1) ? true : false;
+                this.mensajeErrorDato = (this.estadoAlerta == false && this.accionAlerta != 1 && this.accionAlerta != 500) ? true : false;
+                this.mensajeErrorServer = (this.estadoAlerta == false && this.accionAlerta == 500) ? true : false;
 
 
             }
@@ -77,11 +81,11 @@
             '<h2 class="h3 display text-danger text-center"><i class="fa fa-warning"></i> ERROR AL CARGAR DATOS A LA TABLA !! </h2>',
             '</div>',
             '</div>',
-            '<div class="row" >',
+            '<div class="row" v-show="errorServer==false">',
             '<div class="col-xs-12 col-lg-12" style="margin-bottom: 20px !important; margin-top: 6px !important">',
-            '<button class="btn btn-sm btn-info botonesDataTable" v-on:click="NuevoRegistro" v-bind:disabled="estaCreando"><i class="fa fa-plus"></i> Agregar </button>',
-            '<button class="btn btn-sm btn-warning botonesDataTable" v-show="dataNoob.length>0" v-on:click="EditarRegistro" v-bind:disabled="dataNoob.length<1"><i class="fa fa-edit"></i> Editar </button>',
-            '<button class="btn btn-sm btn-danger botonesDataTable" v-show="dataNoob.length>0" v-on:click="EliminarRegistro" v-bind:disabled="dataNoob.length<1"><i class="fa fa-trash"></i> Eliminar </button>',
+            '<button class="btn btn-sm btn-info botonesDataTable" v-on:click="NuevoRegistro" v-bind:disabled="peticionServer"><i class="fa fa-plus"></i> Agregar </button>',
+            '<button class="btn btn-sm btn-warning botonesDataTable" v-show="dataNoob.length>0" v-on:click="EditarRegistro" v-bind:disabled="dataNoob.length<1 || peticionServer"><i class="fa fa-edit"></i> Editar </button>',
+            '<button class="btn btn-sm btn-danger botonesDataTable" v-show="dataNoob.length>0" v-on:click="EliminarRegistro" v-bind:disabled="dataNoob.length<1 || peticionServer"><i class="fa fa-trash"></i> Eliminar </button>',
             '</div>',
             '</div>',
             '<div class="row" v-show="filaEstaSeleccionada == false">',
@@ -117,7 +121,16 @@
                 type: Boolean,
                 required: true
             },
-            filaEstaSeleccionada: false
+            filaEstaSeleccionada: false,
+            errorServer: {
+                type: Boolean,
+                required: true
+            }
+            ,
+            peticionServer: {
+                type: Boolean,
+                required: true
+            }
         },
         mounted() {
 
@@ -136,9 +149,6 @@
 
                 this.filaEstaSeleccionada = (count !== undefined && count > 0) ? true : false;
 
-                //for (var i = 0; i < filaData.length ; i++) {
-                //    alert("Nombre: " + filaData[i].Nombre + " Direccion: " + filaData[i].Descripcion + " Codigo: " + filaData[i].Codigo);              
-                //}
                 if (this.filaEstaSeleccionada) {
                     let objeto = {};
                     objeto.Nombre = filaData[0].Nombre;
@@ -214,6 +224,7 @@
     var app = new Vue({
         el: "#appVue",
         data: {
+            errorServer: false,
             estaCreando: false,
             peticionServer: true,
             esNuevo: true,
@@ -279,7 +290,7 @@
             },
             NuevoRegistroNoob: function () {
                 this.LimpiarVariables();
-                this.estaCreando = (this.estaCreando) ? false : true;
+                this.estaCreando = true;
                 this.visibleAlerta = false;
                 this.esNuevo = true;
             },
@@ -300,102 +311,154 @@
             },
             RecargarTabla: function () {
 
+                if (this.errorServer == false) {
 
-                fetch('/Inventario/Bodega/ObtenerTodo', {
-                    method: 'get',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (json) {
-
-                    if (json.Lista !== undefined && json.Lista.length > 0)
-                        this.dataNoob = json.Lista;
-                    else
-                        this.dataNoob = [];
-
-                    //tipos de accion+
-                    //0: Crear
-                    //1: Leer
-                    //2: Actualizar
-                    //3: Eliminar
-
-                    this.accionAlerta = 1;
-
-                    if (json.Estado == false) {
-
-                        this.estadoAlerta = false;
-                        this.errorDataNoob = true;
-                        this.dataNoob = [];
-                        this.visibleAlerta = true;
-
-                    }
-                    else {
-                        this.errorDataNoob = false;
-                        this.estadoAlerta = true;
-                        this.visibleAlerta = false;
-                    }
+                    fetch('/Inventario/Bodega/ObtenerTodo', {
+                        method: 'get',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(function (response) {
 
 
-                    this.peticionServer = false;
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Network response was not ok.');
 
-                }.bind(this));
+                    })
+                    .then(function (json) {
+
+                        if (json.Lista !== undefined && json.Lista.length > 0)
+                            this.dataNoob = json.Lista;
+                        else
+                            this.dataNoob = [];
+
+                        //tipos de accion+
+                        //0: Crear
+                        //1: Leer
+                        //2: Actualizar
+                        //3: Eliminar
+
+                        this.accionAlerta = 1;
+
+                        if (json.Estado == false) {
+
+                            this.estadoAlerta = false;
+                            this.errorDataNoob = true;
+                            this.dataNoob = [];
+                            this.visibleAlerta = true;
+
+                        }
+                        else {
+                            this.errorDataNoob = false;
+                            this.estadoAlerta = true;
+                            this.visibleAlerta = false;
+                        }
+
+
+                        this.peticionServer = false;
+                        this.errorServer = false;
+
+                    }.bind(this))
+                        .catch(function (error) {
+
+                            this.accionAlerta = 500;
+                            this.dataNoob = [];
+                            this.estadoAlerta = false;
+                            this.errorDataNoob = true;
+                            this.visibleAlerta = true;
+                            this.errorServer = true;
+                            //console.log('There has been a problem with your fetch operation: ' + error.message);
+
+                        }.bind(this));
+
+
+                }//fin if
+
 
             },
             GuardarBodega: function () {
 
-                this.peticionServer = true;
-                this.visibleAlerta = false;
+                if (this.errorServer == false && this.peticionServer == false) {
 
-                fetch('/Inventario/Bodega/Guardar', {
-                    method: 'post',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        Nombre: this.mNombre,
-                        Descripcion: this.mDescripcion,
-                        Codigo: this.mCodigo,
-                        EsNuevo: this.esNuevo,
-                        IdBodega: this.mIdBodega
+
+                    this.peticionServer = true;
+                    this.visibleAlerta = false;
+
+                    fetch('/Inventario/Bodega/Guardar', {
+                        method: 'post',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            Nombre: this.mNombre,
+                            Descripcion: this.mDescripcion,
+                            Codigo: this.mCodigo,
+                            EsNuevo: this.esNuevo,
+                            IdBodega: this.mIdBodega
+                        })
                     })
-                })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (json) {
+                    .then(function (response) {
 
-                    if (json.Lista !== undefined && json.Lista.length > 0)
-                        this.dataNoob = json.Lista;
-                    else
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Network response was not ok.');
+
+                    })
+                    .then(function (json) {
+
+                        if (json.Lista !== undefined && json.Lista.length > 0)
+                            this.dataNoob = json.Lista;
+                        else
+                            this.dataNoob = [];
+
+                        this.peticionServer = false;
+                        this.estaCreando = false;
+
+                        if (this.esNuevo)
+                            this.accionAlerta = 1;
+                        else
+                            this.accionAlerta = 2;
+
+                        if (json.Estado == false || json.Peticion == false) {
+
+                            if (json.Estado == false)
+                                this.errorDataNoob = true;
+
+                            this.estadoAlerta = false;
+                        }
+                        else {
+                            this.errorDataNoob = false;
+                            this.estadoAlerta = true;
+                        }
+                        this.visibleAlerta = true;
+
+                        this.errorServer = false;
+
+
+                    }.bind(this)).catch(function (error) {
+
+
+                        this.accionAlerta = 500;
                         this.dataNoob = [];
-
-                    this.peticionServer = false;
-                    this.estaCreando = false;
-
-                    if (this.esNuevo)
-                        this.accionAlerta = 1;
-                    else
-                        this.accionAlerta = 2;
-
-                    if (json.Estado == false || json.Peticion == false) {
-
-                        if (json.Estado == false)
-                            this.errorDataNoob = true;
-
                         this.estadoAlerta = false;
-                    }
-                    else {
-                        this.errorDataNoob = false;
-                        this.estadoAlerta = true;
-                    }
-                    this.visibleAlerta = true;
+                        this.errorDataNoob = true;
+                        this.visibleAlerta = true;
+                        this.peticionServer = true;
+                        this.estaCreando = true;
+                        this.errorServer = true;
 
 
-                }.bind(this));
+                    }.bind(this));
+
+
+
+                }//fin if
+
+
 
 
             }

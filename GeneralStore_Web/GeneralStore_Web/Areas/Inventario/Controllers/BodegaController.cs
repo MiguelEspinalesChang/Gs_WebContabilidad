@@ -25,7 +25,6 @@ namespace GeneralStore_Web.Areas.Inventario.Controllers
 
             registros = objeto.ObtenerBodegas();
 
-
             return Json(new { Lista = registros.Lista, Estado = registros.Peticion }, JsonRequestBehavior.AllowGet);
         }
 
