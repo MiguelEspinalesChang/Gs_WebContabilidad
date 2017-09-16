@@ -12,13 +12,17 @@
 
 }
 
-#elementoAnimado {
-  -webkit-animation-duration: 1s;
+.elementoAnimado {
+  -webkit-animation-duration: 3s;
   -webkit-animation-delay: 0.2s;
   -webkit-animation-iteration-count: 1;
   -moz-animation-duration: 3s;
   -moz-animation-delay: 0.2s;
   -moz-animation-iteration-count: 1;
+}
+
+.cartaSin{
+    height: auto !important;
 }
 
 /*.btn-infoNoob{

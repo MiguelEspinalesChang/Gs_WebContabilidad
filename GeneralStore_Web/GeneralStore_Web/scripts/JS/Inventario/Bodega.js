@@ -4,17 +4,30 @@
     var alertasComponent = Vue.component("alertas-noob", {
 
         template: [
-            '<div class="row" v-show="visibleAlerta" >',
+            '<div class="row">',
             '<div class="col-xs-12 col-lg-12">',
-            '<div class="alert alert-dismissable animated zoomInUp" id="elementoAnimado" v-bind:class="clasesAlerta">',
-            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;',
+            '<div v-show="visibleAlerta" class="alert alert-dismissable animated zoomInUp" id="elementoAnimado" v-bind:class="clasesAlerta">',
+                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;',
             '</a>',
-            '<strong>{{textoAlerta}}',
+            '<strong v-show="mensajeErrorTabla"><i class="fa fa-warning"></i> Error al cargar los datos en la tabla',
+            '</strong>',
+            '<strong v-show="mensajeDatoGuardado" ><i class="fa fa-save"></i> Dato guardado con exito',
+            '</strong>',
+            '<strong v-show="mensajeDatoEliminado" ><i class="fa fa-trash-o"></i> Dato eliminado con exito',
+            '</strong>',
+            '<strong v-show="mensajeDatoActualizado" ><i class="fa fa-pencil-squere-o"></i> Dato actualizado con exito',
             '</strong>',
             '</div>',
             '</div>',
             '</div>'
         ].join(''),
+        data:{
+            mensajeErrorTabla: false,
+            mensajeDatoGuardado: false,
+            mensajeDatoEliminado: false,
+            mensajeDatoActualizado: false,
+            mensajeErrorDato: false
+        },
         props: {
             estadoAlerta: {
                 type: Boolean,
@@ -22,10 +35,6 @@
             },
             accionAlerta: {
                 type: Number,
-                required: true
-            },
-            textoAlerta: {
-                type: String,
                 required: true
             },
             visibleAlerta: {
@@ -37,8 +46,8 @@
         computed: {
             clasesAlerta: function () {
                 return {
-                    'alert-success': this.accionAlerta == 1 && this.estadoAlerta == false,
-                    'alert-danger': this.accionAlerta == 1 && this.estadoAlerta == true,
+                    'alert-info': this.estadoAlerta == true,
+                    'alert-danger': this.estadoAlerta == false,
                 }
             }
         },
@@ -46,7 +55,11 @@
 
             visibleAlerta: function (val, oldVal) {
 
-
+                this.mensajeErrorTabla = (this.estadoAlerta==false && this.accionAlerta == 1) ? true: false;
+                this.mensajeDatoGuardado = (this.estadoAlerta == true && this.accionAlerta == 0) ? true : false;
+                this.mensajeDatoEliminado = (this.estadoAlerta == true && this.accionAlerta == 3) ? true : false;
+                this.mensajeDatoActualizado = (this.estadoAlerta == true && this.accionAlerta == 2) ? true : false;
+                this.mensajeErrorDato = (this.estadoAlerta == true && this.accionAlerta != 1) ? true : false;
 
 
             }
@@ -56,8 +69,15 @@
 
     var tablaNoobVar = Vue.component("tabla-noob", {
         template: [
+            `<div>`,
+            '<div class="row" v-show="errorDataNoob">',
+            '<div class="col-xs-12 col-lg-12">',
+            '<h2 class="h3 display text-danger text-center"><i class="fa fa-warning"></i> ERROR AL CARGAR DATOS A LA TABLA !! </h2>',
+            '</div>',
+            '</div>',
             '<table :id="idTabla" class="table table-striped table-hover"  style="width=100%" cellspacing="0">',
-            '</table>'
+            '</table>',
+            '</div>'
         ].join(''),
         data: {
             tablaDefinida: {}
@@ -73,6 +93,10 @@
             },
             dataNoob: {
                 type: Array,
+                required: true
+            },
+            errorDataNoob: {
+                type: Boolean,
                 required: true
             }
         },
@@ -158,7 +182,7 @@
         el: "#appVue",
         data: {
             estaCreando: false,
-            estaGuardando: false,
+            peticionServer: true,
             esNuevo: true,
             idTabla: "jojojojo",
             columnasNoob: [
@@ -184,11 +208,11 @@
                 }
             ],
             dataNoob: [],
+            errorDataNoob: false,
             total: 0,
             datosJson: [],
             estadoAlerta: false,
             accionAlerta: 0,
-            textoAlerta: "",
             visibleAlerta: false,
             mNombre: "",
             mDescripcion: "",
@@ -219,6 +243,7 @@
             },
             RecargarTabla: function () {
 
+
                 fetch('/Inventario/Bodega/ObtenerTodo', {
                     method: 'get',
                     headers: {
@@ -230,24 +255,44 @@
                 })
                 .then(function (json) {
 
-                    this.textoAlerta = "jejeedsfsd sdfsdf"
+                    if (json.Lista !== undefined && json.Lista.length > 0)
+                        this.dataNoob = json.Lista;
+                    else
+                        this.dataNoob = [];
+
+                    //tipos de accion+
+                    //0: Crear
+                    //1: Leer
+                    //2: Actualizar
+                    //3: Eliminar
+                    
                     this.accionAlerta = 1;
+
                     if (json.Estado == false) {
-                        this.estadoAlerta = false;
-                        this.textoAlerta = "jejee"
+
+                        this.estadoAlerta = false;              
+                        this.errorDataNoob = true;
+                        this.dataNoob = [];
+                        this.visibleAlerta = true;
+
                     }
                     else {
-                        this.dataNoob = json.Lista;
+                        this.errorDataNoob = false;
+                        this.estadoAlerta = true;
+                        this.visibleAlerta = false;
                     }
 
-                    this.visibleAlerta = true;
+                    
+                    this.peticionServer = false;
 
                 }.bind(this));
 
             },
             GuardarBodega: function () {
 
-                this.estaGuardando = true;
+                this.peticionServer = true;
+                this.visibleAlerta = false;
+
                 fetch('/Inventario/Bodega/Guardar', {
                     method: 'post',
                     headers: {
@@ -264,9 +309,27 @@
                     return response.json();
                 })
                 .then(function (json) {
-                    this.dataNoob = json.Lista;
-                    this.estaGuardando = false;
+
+                    if (json.Lista !== undefined && json.Lista.length > 0)
+                        this.dataNoob = json.Lista;
+                    else
+                        this.dataNoob = [];
+
+                    this.peticionServer = false;
                     this.estaCreando = false;
+                    this.accionAlerta = 0;
+
+                    if (json.Estado == false) {
+                        this.errorDataNoob = true;
+                        this.estadoAlerta = false;
+                    }
+                    else {
+                        this.errorDataNoob = false;
+                        this.estadoAlerta = true;
+                    }
+                    this.visibleAlerta = true;
+
+
                 }.bind(this));
 
 
@@ -281,22 +344,28 @@
                 }
             },
             clasesAnimacion: function () {
-                var arrayAnimaciones = [
+                let arrayAnimaciones = [
                     "jackInTheBox",
                     "rollIn",
                     "flipInX",
                     "fadeInUp",
                     "pulse",
                     "lightSpeedIn",
-                    "flipinY",
+                    "flipInY",
                     "fadeInRight"
                 ]
 
-                var clase = arrayAnimaciones[Math.floor((Math.random() * 7) + 0)];
+                let aleatorio = Math.floor((Math.random() * 7) + 0);
 
                 return {
-                    'animated jackInTheBox': this.estaCreando,
-
+                    'animated jackInTheBox elementoAnimado': this.estaCreando && aleatorio ==0,
+                    'animated rollIn elementoAnimado': this.estaCreando && aleatorio == 1,
+                    'animated flipInX elementoAnimado': this.estaCreando && aleatorio == 2,
+                    'animated fadeInUp elementoAnimado': this.estaCreando && aleatorio == 3,
+                    'animated pulse elementoAnimado': this.estaCreando && aleatorio == 4,
+                    'animated lightSpeedIn elementoAnimado': this.estaCreando && aleatorio == 5,
+                    'animated flipInY elementoAnimado': this.estaCreando && aleatorio == 6,
+                    'animated fadeInRight elementoAnimado': this.estaCreando && aleatorio == 7,
                     '': this.estaCreando == false,
                 }
 

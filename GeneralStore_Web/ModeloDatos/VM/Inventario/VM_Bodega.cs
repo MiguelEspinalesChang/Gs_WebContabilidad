@@ -158,7 +158,7 @@ namespace ModeloDatos.VM.Inventario
             }catch(Exception e)
             {
                 lista.Lista = new List<ObjetosBodega>();
-                lista.Peticion = true;
+                lista.Peticion = false;
             }
             return lista;
 
