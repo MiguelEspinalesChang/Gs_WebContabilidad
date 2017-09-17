@@ -273,7 +273,8 @@
             mNombre: "",
             mDescripcion: "",
             mCodigo: "",
-            mIdBodega: 0
+            mIdBodega: 0,
+            listaErrores: []
         },
         mounted() {
             $("#appVue").toggle("fast", function () {
@@ -287,6 +288,7 @@
                 this.mDescripcion = "";
                 this.mCodigo = "";
                 this.mIdBodega = 0;
+                this.listaErrores = [];
             },
             NuevoRegistroNoob: function () {
                 this.LimpiarVariables();
@@ -310,7 +312,7 @@
                 this.visibleAlerta = false;
             },
             RecargarTabla: function () {
-
+                this.LimpiarVariables();
                 if (this.errorServer == false) {
 
                     fetch('/Inventario/Bodega/ObtenerTodo', {
@@ -340,6 +342,7 @@
                         //1: Leer
                         //2: Actualizar
                         //3: Eliminar
+                        //500: error interno del server
 
                         this.accionAlerta = 1;
 
@@ -383,7 +386,7 @@
 
                 if (this.errorServer == false && this.peticionServer == false) {
 
-
+                    this.listaErrores = [];
                     this.peticionServer = true;
                     this.visibleAlerta = false;
 
@@ -412,31 +415,54 @@
 
                         if (json.Lista !== undefined && json.Lista.length > 0)
                             this.dataNoob = json.Lista;
-                        else
-                            this.dataNoob = [];
+                        else {
+
+                            if (json.Estado !== undefined)
+                                this.dataNoob = [];
+                        }
+
+                        if (json.Estado !== undefined && json.Peticion == true)
+                            this.mIdBodega = json.IdObjeto;
 
                         this.peticionServer = false;
-                        this.estaCreando = false;
+                        this.estaCreando = true;
 
-                        if (this.esNuevo)
-                            this.accionAlerta = 1;
-                        else
+                        if (this.esNuevo == false) {
                             this.accionAlerta = 2;
+                        }
+                            //si la peticion era nuevo y la peticion del server viene en true
+                            //cambiar a esnuevo = false
+                        else {
+                            this.accionAlerta = 0;
 
-                        if (json.Estado == false || json.Peticion == false) {
+                            if (json.Peticion == true)
+                                this.esNuevo = false;
+                        }
+
+
+                        if (json.Estado !== undefined && (json.Estado == false || json.Peticion == false)) {
 
                             if (json.Estado == false)
                                 this.errorDataNoob = true;
 
+                            if (json.Peticion == false) {
+                                this.listaErrores = json.Errores;
+                            }
+
                             this.estadoAlerta = false;
                         }
                         else {
-                            this.errorDataNoob = false;
-                            this.estadoAlerta = true;
-                        }
-                        this.visibleAlerta = true;
+                            this.errorDataNoob = false; //para el datatable
+                            this.estadoAlerta = true; //para la alerta
 
-                        this.errorServer = false;
+                            if(json.Estado === undefined)
+                                this.listaErrores = json.Errores;
+                        }
+
+                        if (json.Estado !== undefined)
+                            this.visibleAlerta = true;
+
+                        this.errorServer = false; //es por si el ASP no termina la peticion
 
 
                     }.bind(this)).catch(function (error) {
@@ -450,7 +476,10 @@
                         this.peticionServer = true;
                         this.estaCreando = true;
                         this.errorServer = true;
-
+                        this.listaErrores = [];
+                        this.listaErrores.push({
+                            "mensaje": "Error en el servidor, porfavor recargue la página !!"
+                        });
 
                     }.bind(this));
 

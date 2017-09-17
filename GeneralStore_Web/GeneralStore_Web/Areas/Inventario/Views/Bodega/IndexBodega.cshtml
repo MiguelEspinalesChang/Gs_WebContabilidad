@@ -86,7 +86,18 @@
                     </div>
                     <div class="form-group">
                         <label>Codigo: </label>
-                        <input type="text" v-model="mCodigo" v-bind:disabled="peticionServer" placeholder="Codigo de la bodega" class="form-control">
+                        <div class="input-group">
+                            <span class="input-group-addon">Bod-</span>
+                            <input type="text" v-model="mCodigo" v-bind:disabled="peticionServer" placeholder="Codigo de la bodega" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row" v-show="listaErrores.length>0" style="margin-top:10px; margin-bottom:10px;">
+                        <div class="col-xs-12 col-lg-12">
+                            <h4 class="h4 text-danger display" v-for="item in listaErrores">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                {{item}}
+                            </h4>
+                        </div>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-success pull-left" v-show="!peticionServer"

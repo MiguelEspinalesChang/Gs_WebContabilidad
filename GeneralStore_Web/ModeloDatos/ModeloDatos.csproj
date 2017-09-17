@@ -78,6 +78,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VM\Inventario\VM_Bodega.cs" />
+    <Compile Include="VM\ObjetoGuardado.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="BaseDatos\GS_BaseDatosModelo.edmx">

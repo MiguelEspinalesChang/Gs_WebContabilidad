@@ -1,4 +1,5 @@
-﻿using ModeloDatos.VM.Inventario;
+﻿using ModeloDatos.VM;
+using ModeloDatos.VM.Inventario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,15 +31,36 @@ namespace GeneralStore_Web.Areas.Inventario.Controllers
 
         public JsonResult Guardar(ObjetosBodega datos)
         {
+            ObjetoGuardado peticion = new ObjetoGuardado();
+            if (!ModelState.IsValid)
+            {
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var modelError in modelState.Errors)
+                    {
+                        peticion.ListaErrores.Add(modelError.ErrorMessage.ToString());
+                    }
+                }
+                return Json(new
+                {
+                    Peticion = false,
+                    Errores = peticion.ListaErrores
+                }, JsonRequestBehavior.AllowGet);
+            }
+
+
+
             VM_Bodega objeto = new VM_Bodega();
-            bool peticion = objeto.Guardar(datos);
+            peticion = objeto.Guardar(datos);
             Json_Bodega registros = new Json_Bodega();
             registros = objeto.ObtenerBodegas();
 
             return Json(new {
                 Lista = registros.Lista,
                 Estado = registros.Peticion,
-                Peticion = peticion
+                Peticion = peticion.Peticion,
+                Errores = peticion.ListaErrores,
+                IdObjeto = peticion.IdObjeto
             },JsonRequestBehavior.AllowGet);
         }
 
