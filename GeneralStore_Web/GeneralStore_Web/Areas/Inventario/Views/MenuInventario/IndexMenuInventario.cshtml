@@ -4,9 +4,23 @@
     Layout = "~/Views/Compartida/_LayoutPrincipal.cshtml";
 }
 
-<div class="col-xs-12" id="appVue">
 
-<a class="btn btn-info" href="/Inventario/Bodega/Index">BODEGAS</a>
+<script src="~/FrontEnd/Highcharts-5.0.14/code/highcharts.js"></script>
+<script src="~/FrontEnd/Highcharts-5.0.14/code/modules/exporting.js"></script>
+<script src="~/FrontEnd/Highcharts-5.0.14/code/themes/grid.js"></script>
+<div class="col-xs-12 col-lg-12" id="appVue">
+
+    <a class="btn btn-info" href="/Inventario/Bodega/Index">BODEGAS</a>
+
+
+    <div class="row" style="display: none" >
+        <div class="col-xs-12 col-lg-6" id="grafico" style="width:100%; height:200px">
+           
+        </div>
+    </div>
+
+
+
 
 </div>
 
