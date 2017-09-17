@@ -9,6 +9,7 @@ using static ModeloDatos.VM.Inventario.VM_Bodega;
 
 namespace GeneralStore_Web.Areas.Inventario.Controllers
 {
+    //https://github.com/etimbo/jquery-print-preview-plugin
     public class BodegaController : Controller
     {
         // GET: Inventario/Bodega
