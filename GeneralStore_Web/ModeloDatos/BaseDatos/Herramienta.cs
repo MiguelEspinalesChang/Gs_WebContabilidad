@@ -12,15 +12,17 @@ namespace ModeloDatos.BaseDatos
     using System;
     using System.Collections.Generic;
     
-    public partial class Item_Bodega
+    public partial class Herramienta
     {
-        public int IdItemBodega { get; set; }
-        public int IdItem { get; set; }
-        public int IdBodega { get; set; }
-        public string Ubicacion { get; set; }
-        public int Unidad { get; set; }
+        public Herramienta()
+        {
+            this.Herramienta_Bodega = new HashSet<Herramienta_Bodega>();
+        }
     
-        public virtual Bodega Bodega { get; set; }
-        public virtual Item Item { get; set; }
+        public int IdHerramienta { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+    
+        public virtual ICollection<Herramienta_Bodega> Herramienta_Bodega { get; set; }
     }
 }

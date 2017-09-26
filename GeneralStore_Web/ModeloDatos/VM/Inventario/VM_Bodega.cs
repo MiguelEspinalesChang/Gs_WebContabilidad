@@ -105,6 +105,7 @@ namespace ModeloDatos.VM.Inventario
                     esNuevo = value;
                 }
             }
+
         }
 
 
@@ -190,6 +191,7 @@ namespace ModeloDatos.VM.Inventario
                     registro.Descripcion = datos.Descripcion;
                     registro.Codigo = datos.Codigo;
                     dataContext.Bodegas.Add(registro);
+
                     dataContext.SaveChanges();
                     peticion.Peticion = true;
                     peticion.IdObjeto = registro.IdBodega;

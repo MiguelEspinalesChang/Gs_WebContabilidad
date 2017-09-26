@@ -16,6 +16,7 @@ namespace ModeloDatos.BaseDatos
     {
         public Bodega()
         {
+            this.Herramienta_Bodega = new HashSet<Herramienta_Bodega>();
             this.Item_Bodega = new HashSet<Item_Bodega>();
         }
     
@@ -25,7 +26,9 @@ namespace ModeloDatos.BaseDatos
         public string Direccion { get; set; }
         public string Nombre { get; set; }
         public bool Estado { get; set; }
+        public Nullable<int> IdTipoBodega { get; set; }
     
+        public virtual ICollection<Herramienta_Bodega> Herramienta_Bodega { get; set; }
         public virtual ICollection<Item_Bodega> Item_Bodega { get; set; }
     }
 }

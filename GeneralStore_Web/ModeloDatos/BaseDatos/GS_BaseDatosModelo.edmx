@@ -15,6 +15,25 @@
           <Property Name="Direccion" Type="varchar" MaxLength="500" />
           <Property Name="Nombre" Type="varchar" MaxLength="100" />
           <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="IdTipoBodega" Type="int" />
+        </EntityType>
+        <EntityType Name="Herramienta">
+          <Key>
+            <PropertyRef Name="IdHerramienta" />
+          </Key>
+          <Property Name="IdHerramienta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <EntityType Name="Herramienta_Bodega">
+          <Key>
+            <PropertyRef Name="IdHerramientaBodega" />
+          </Key>
+          <Property Name="IdHerramientaBodega" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdHerramienta" Type="int" Nullable="false" />
+          <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="Ubicacion" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Unidad" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Item">
           <Key>
@@ -38,7 +57,33 @@
           <Property Name="IdItemBodega" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdItem" Type="int" Nullable="false" />
           <Property Name="IdBodega" Type="int" Nullable="false" />
+          <Property Name="Ubicacion" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Unidad" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Herramien__IdBod__30F848ED">
+          <End Role="Bodega" Type="Self.Bodega" Multiplicity="1" />
+          <End Role="Herramienta_Bodega" Type="Self.Herramienta_Bodega" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bodega">
+              <PropertyRef Name="IdBodega" />
+            </Principal>
+            <Dependent Role="Herramienta_Bodega">
+              <PropertyRef Name="IdBodega" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Herramien__IdHer__300424B4">
+          <End Role="Herramienta" Type="Self.Herramienta" Multiplicity="1" />
+          <End Role="Herramienta_Bodega" Type="Self.Herramienta_Bodega" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Herramienta">
+              <PropertyRef Name="IdHerramienta" />
+            </Principal>
+            <Dependent Role="Herramienta_Bodega">
+              <PropertyRef Name="IdHerramienta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Item_Bode__IdBod__286302EC">
           <End Role="Bodega" Type="Self.Bodega" Multiplicity="1" />
           <End Role="Item_Bodega" Type="Self.Item_Bodega" Multiplicity="*" />
@@ -65,8 +110,18 @@
         </Association>
         <EntityContainer Name="DB_A2A2D5_GsContabilidadModelStoreContainer">
           <EntitySet Name="Bodega" EntityType="Self.Bodega" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Herramienta" EntityType="Self.Herramienta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Herramienta_Bodega" EntityType="Self.Herramienta_Bodega" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item_Bodega" EntityType="Self.Item_Bodega" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Herramien__IdBod__30F848ED" Association="Self.FK__Herramien__IdBod__30F848ED">
+            <End Role="Bodega" EntitySet="Bodega" />
+            <End Role="Herramienta_Bodega" EntitySet="Herramienta_Bodega" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Herramien__IdHer__300424B4" Association="Self.FK__Herramien__IdHer__300424B4">
+            <End Role="Herramienta" EntitySet="Herramienta" />
+            <End Role="Herramienta_Bodega" EntitySet="Herramienta_Bodega" />
+          </AssociationSet>
           <AssociationSet Name="FK__Item_Bode__IdBod__286302EC" Association="Self.FK__Item_Bode__IdBod__286302EC">
             <End Role="Bodega" EntitySet="Bodega" />
             <End Role="Item_Bodega" EntitySet="Item_Bodega" />
@@ -80,29 +135,23 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB_A2A2D5_GsContabilidadModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Item">
-          <Key>
-            <PropertyRef Name="IdItem" />
-          </Key>
-          <Property Name="IdItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ubicacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Cantidad" Type="Single" Nullable="false" />
-          <Property Name="Codigo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UniCosDolar" Type="Single" Nullable="false" />
-          <Property Name="UniCosCordo" Type="Single" Nullable="false" />
-          <Property Name="TotalCosDolar" Type="Single" Nullable="false" />
-          <Property Name="TotalCosCordo" Type="Single" Nullable="false" />
-          <Property Name="Estado" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Item_Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdIte__276EDEB3" FromRole="Item" ToRole="Item_Bodega" />
-        </EntityType>
         <EntityContainer Name="DB_A2A2D5_GsContabilidadEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Items" EntityType="Self.Item" />
           <EntitySet Name="Bodegas" EntityType="DB_A2A2D5_GsContabilidadModel.Bodega" />
+          <EntitySet Name="Herramientas" EntityType="DB_A2A2D5_GsContabilidadModel.Herramienta" />
+          <EntitySet Name="Herramienta_Bodega" EntityType="DB_A2A2D5_GsContabilidadModel.Herramienta_Bodega" />
+          <EntitySet Name="Items" EntityType="DB_A2A2D5_GsContabilidadModel.Item" />
           <EntitySet Name="Item_Bodega" EntityType="DB_A2A2D5_GsContabilidadModel.Item_Bodega" />
+          <AssociationSet Name="FK__Herramien__IdBod__30F848ED" Association="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdBod__30F848ED">
+            <End Role="Bodega" EntitySet="Bodegas" />
+            <End Role="Herramienta_Bodega" EntitySet="Herramienta_Bodega" />
+          </AssociationSet>
           <AssociationSet Name="FK__Item_Bode__IdBod__286302EC" Association="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdBod__286302EC">
             <End Role="Bodega" EntitySet="Bodegas" />
             <End Role="Item_Bodega" EntitySet="Item_Bodega" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Herramien__IdHer__300424B4" Association="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdHer__300424B4">
+            <End Role="Herramienta" EntitySet="Herramientas" />
+            <End Role="Herramienta_Bodega" EntitySet="Herramienta_Bodega" />
           </AssociationSet>
           <AssociationSet Name="FK__Item_Bode__IdIte__276EDEB3" Association="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdIte__276EDEB3">
             <End Role="Item" EntitySet="Items" />
@@ -119,7 +168,46 @@
           <Property Name="Direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="IdTipoBodega" Type="Int32" />
+          <NavigationProperty Name="Herramienta_Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdBod__30F848ED" FromRole="Bodega" ToRole="Herramienta_Bodega" />
           <NavigationProperty Name="Item_Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdBod__286302EC" FromRole="Bodega" ToRole="Item_Bodega" />
+        </EntityType>
+        <EntityType Name="Herramienta">
+          <Key>
+            <PropertyRef Name="IdHerramienta" />
+          </Key>
+          <Property Name="IdHerramienta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Herramienta_Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdHer__300424B4" FromRole="Herramienta" ToRole="Herramienta_Bodega" />
+        </EntityType>
+        <EntityType Name="Herramienta_Bodega">
+          <Key>
+            <PropertyRef Name="IdHerramientaBodega" />
+          </Key>
+          <Property Name="IdHerramientaBodega" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdHerramienta" Type="Int32" Nullable="false" />
+          <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="Ubicacion" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Unidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdBod__30F848ED" FromRole="Herramienta_Bodega" ToRole="Bodega" />
+          <NavigationProperty Name="Herramienta" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdHer__300424B4" FromRole="Herramienta_Bodega" ToRole="Herramienta" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="IdItem" />
+          </Key>
+          <Property Name="IdItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ubicacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Cantidad" Type="Single" Nullable="false" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="UniCosDolar" Type="Single" Nullable="false" />
+          <Property Name="UniCosCordo" Type="Single" Nullable="false" />
+          <Property Name="TotalCosDolar" Type="Single" Nullable="false" />
+          <Property Name="TotalCosCordo" Type="Single" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Item_Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdIte__276EDEB3" FromRole="Item" ToRole="Item_Bodega" />
         </EntityType>
         <EntityType Name="Item_Bodega">
           <Key>
@@ -128,9 +216,23 @@
           <Property Name="IdItemBodega" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdItem" Type="Int32" Nullable="false" />
           <Property Name="IdBodega" Type="Int32" Nullable="false" />
+          <Property Name="Ubicacion" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Unidad" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdBod__286302EC" FromRole="Item_Bodega" ToRole="Bodega" />
           <NavigationProperty Name="Item" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdIte__276EDEB3" FromRole="Item_Bodega" ToRole="Item" />
         </EntityType>
+        <Association Name="FK__Herramien__IdBod__30F848ED">
+          <End Type="DB_A2A2D5_GsContabilidadModel.Bodega" Role="Bodega" Multiplicity="1" />
+          <End Type="DB_A2A2D5_GsContabilidadModel.Herramienta_Bodega" Role="Herramienta_Bodega" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bodega">
+              <PropertyRef Name="IdBodega" />
+            </Principal>
+            <Dependent Role="Herramienta_Bodega">
+              <PropertyRef Name="IdBodega" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Item_Bode__IdBod__286302EC">
           <End Type="DB_A2A2D5_GsContabilidadModel.Bodega" Role="Bodega" Multiplicity="1" />
           <End Type="DB_A2A2D5_GsContabilidadModel.Item_Bodega" Role="Item_Bodega" Multiplicity="*" />
@@ -140,6 +242,18 @@
             </Principal>
             <Dependent Role="Item_Bodega">
               <PropertyRef Name="IdBodega" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Herramien__IdHer__300424B4">
+          <End Type="DB_A2A2D5_GsContabilidadModel.Herramienta" Role="Herramienta" Multiplicity="1" />
+          <End Type="DB_A2A2D5_GsContabilidadModel.Herramienta_Bodega" Role="Herramienta_Bodega" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Herramienta">
+              <PropertyRef Name="IdHerramienta" />
+            </Principal>
+            <Dependent Role="Herramienta_Bodega">
+              <PropertyRef Name="IdHerramienta" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -155,31 +269,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DB_A2A2D5_GsContabilidadModelStoreContainer" CdmEntityContainer="DB_A2A2D5_GsContabilidadEntities">
-          <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Item">
-              <MappingFragment StoreEntitySet="Item">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="IdItem" ColumnName="IdItem" />
-                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="UniCosDolar" ColumnName="UniCosDolar" />
-                <ScalarProperty Name="UniCosCordo" ColumnName="UniCosCordo" />
-                <ScalarProperty Name="TotalCosDolar" ColumnName="TotalCosDolar" />
-                <ScalarProperty Name="TotalCosCordo" ColumnName="TotalCosCordo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Bodegas">
             <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Bodega">
               <MappingFragment StoreEntitySet="Bodega">
+                <ScalarProperty Name="IdTipoBodega" ColumnName="IdTipoBodega" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
@@ -189,9 +288,47 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Herramientas">
+            <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Herramienta">
+              <MappingFragment StoreEntitySet="Herramienta">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdHerramienta" ColumnName="IdHerramienta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Herramienta_Bodega">
+            <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Herramienta_Bodega">
+              <MappingFragment StoreEntitySet="Herramienta_Bodega">
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
+                <ScalarProperty Name="IdHerramienta" ColumnName="IdHerramienta" />
+                <ScalarProperty Name="IdHerramientaBodega" ColumnName="IdHerramientaBodega" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="TotalCosCordo" ColumnName="TotalCosCordo" />
+                <ScalarProperty Name="TotalCosDolar" ColumnName="TotalCosDolar" />
+                <ScalarProperty Name="UniCosCordo" ColumnName="UniCosCordo" />
+                <ScalarProperty Name="UniCosDolar" ColumnName="UniCosDolar" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
+                <ScalarProperty Name="IdItem" ColumnName="IdItem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Item_Bodega">
             <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Item_Bodega">
               <MappingFragment StoreEntitySet="Item_Bodega">
+                <ScalarProperty Name="Unidad" ColumnName="Unidad" />
+                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdItem" ColumnName="IdItem" />
                 <ScalarProperty Name="IdItemBodega" ColumnName="IdItemBodega" />

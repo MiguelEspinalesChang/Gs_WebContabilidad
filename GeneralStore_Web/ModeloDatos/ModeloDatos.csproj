@@ -69,6 +69,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
     </Compile>
+    <Compile Include="BaseDatos\Herramienta.cs">
+      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BaseDatos\Herramienta_Bodega.cs">
+      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="BaseDatos\Item.cs">
       <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
     </Compile>

@@ -25,8 +25,10 @@ namespace ModeloDatos.BaseDatos
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Item> Items { get; set; }
         public DbSet<Bodega> Bodegas { get; set; }
+        public DbSet<Herramienta> Herramientas { get; set; }
+        public DbSet<Herramienta_Bodega> Herramienta_Bodega { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<Item_Bodega> Item_Bodega { get; set; }
     }
 }

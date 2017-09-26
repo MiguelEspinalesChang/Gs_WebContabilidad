@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\HP004\Desktop\TeamViewer\Configurar Proyecto\GeneralStore_Web\ModeloDatos\BaseDatos\GS_BaseDatosModelo.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'C:\Users\SocramPC\Source\Repos\Gs_WebContabilidad\GeneralStore_Web\ModeloDatos\BaseDatos\GS_BaseDatosModelo.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.
