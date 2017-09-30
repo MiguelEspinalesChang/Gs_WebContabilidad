@@ -12,15 +12,12 @@ namespace ModeloDatos.BaseDatos
     using System;
     using System.Collections.Generic;
     
-    public partial class Item_Bodega
+    public partial class TasaCambio
     {
-        public int IdItemBodega { get; set; }
-        public int IdItem { get; set; }
-        public int IdBodega { get; set; }
-        public string Ubicacion { get; set; }
-        public int Unidad { get; set; }
-    
-        public virtual Bodega Bodega { get; set; }
-        public virtual Item Item { get; set; }
+        public int IdTasaCambio { get; set; }
+        public System.DateTime FechaInicio { get; set; }
+        public Nullable<System.DateTime> FechaFin { get; set; }
+        public bool Validez { get; set; }
+        public float Valor { get; set; }
     }
 }

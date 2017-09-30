@@ -477,6 +477,7 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\JS\Global\GlobalVue.js" />
     <Content Include="scripts\JS\Inventario\Bodega.js" />
+    <Content Include="scripts\JS\Inventario\Item.js" />
     <Content Include="scripts\JS\Inventario\MenuInventario.js" />
     <Content Include="Web.config" />
   </ItemGroup>

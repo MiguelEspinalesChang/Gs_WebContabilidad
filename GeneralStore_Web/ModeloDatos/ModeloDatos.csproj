@@ -52,17 +52,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseDatos\Bodega.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>GS_BaseDatos.tt</DependentUpon>
     </Compile>
-    <Compile Include="BaseDatos\GS_BaseDatosModelo.Context.cs">
+    <Compile Include="BaseDatos\GS_BaseDatos.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GS_BaseDatosModelo.Context.tt</DependentUpon>
+      <DependentUpon>GS_BaseDatos.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="BaseDatos\GS_BaseDatosModelo.cs">
+    <Compile Include="BaseDatos\GS_BaseDatos.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>GS_BaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\GS_BaseDatosModelo.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -70,20 +70,28 @@
       <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Herramienta.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>GS_BaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Herramienta_Bodega.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>GS_BaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Item.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>GS_BaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Item_Bodega.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>GS_BaseDatos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BaseDatos\Pro_GetFullItems_Result.cs">
+      <DependentUpon>GS_BaseDatos.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BaseDatos\TasaCambio.cs">
+      <DependentUpon>GS_BaseDatos.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VM\Inventario\VM_Bodega.cs" />
+    <Compile Include="VM\Inventario\VM_Item.cs" />
+    <Compile Include="VM\Inventario\VM_Item_Bodega.cs" />
     <Compile Include="VM\ObjetoGuardado.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -100,19 +108,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BaseDatos\GS_BaseDatosModelo.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GS_BaseDatosModelo.Context.cs</LastGenOutput>
-      <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
-    </Content>
-    <Content Include="BaseDatos\GS_BaseDatosModelo.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
-      <LastGenOutput>GS_BaseDatosModelo.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="BaseDatos\GS_BaseDatos.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GS_BaseDatos.Context.cs</LastGenOutput>
+      <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
+    </Content>
+    <Content Include="BaseDatos\GS_BaseDatos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>GS_BaseDatos.cs</LastGenOutput>
+      <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

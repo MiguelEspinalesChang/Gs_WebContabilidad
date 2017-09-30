@@ -40,14 +40,10 @@
             <PropertyRef Name="IdItem" />
           </Key>
           <Property Name="IdItem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Ubicacion" Type="varchar" MaxLength="20" />
-          <Property Name="Cantidad" Type="real" Nullable="false" />
           <Property Name="Codigo" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Descripcion" Type="varchar(max)" Nullable="false" />
           <Property Name="UniCosDolar" Type="real" Nullable="false" />
           <Property Name="UniCosCordo" Type="real" Nullable="false" />
-          <Property Name="TotalCosDolar" Type="real" Nullable="false" />
-          <Property Name="TotalCosCordo" Type="real" Nullable="false" />
           <Property Name="Estado" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_Bodega">
@@ -59,6 +55,16 @@
           <Property Name="IdBodega" Type="int" Nullable="false" />
           <Property Name="Ubicacion" Type="varchar" MaxLength="2000" Nullable="false" />
           <Property Name="Unidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TasaCambio">
+          <Key>
+            <PropertyRef Name="IdTasaCambio" />
+          </Key>
+          <Property Name="IdTasaCambio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="FechaFin" Type="datetime" />
+          <Property Name="Validez" Type="bit" Nullable="false" />
+          <Property Name="Valor" Type="real" Nullable="false" />
         </EntityType>
         <Association Name="FK__Herramien__IdBod__30F848ED">
           <End Role="Bodega" Type="Self.Bodega" Multiplicity="1" />
@@ -108,12 +114,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Pro_GetFullItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="DB_A2A2D5_GsContabilidadModelStoreContainer">
           <EntitySet Name="Bodega" EntityType="Self.Bodega" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Herramienta" EntityType="Self.Herramienta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Herramienta_Bodega" EntityType="Self.Herramienta_Bodega" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item_Bodega" EntityType="Self.Item_Bodega" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TasaCambio" EntityType="Self.TasaCambio" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Herramien__IdBod__30F848ED" Association="Self.FK__Herramien__IdBod__30F848ED">
             <End Role="Bodega" EntitySet="Bodega" />
             <End Role="Herramienta_Bodega" EntitySet="Herramienta_Bodega" />
@@ -136,11 +144,14 @@
     <edmx:ConceptualModels>
       <Schema Namespace="DB_A2A2D5_GsContabilidadModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DB_A2A2D5_GsContabilidadEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="Pro_GetFullItems" ReturnType="Collection(DB_A2A2D5_GsContabilidadModel.Pro_GetFullItems_Result)">
+            </FunctionImport>
           <EntitySet Name="Bodegas" EntityType="DB_A2A2D5_GsContabilidadModel.Bodega" />
           <EntitySet Name="Herramientas" EntityType="DB_A2A2D5_GsContabilidadModel.Herramienta" />
           <EntitySet Name="Herramienta_Bodega" EntityType="DB_A2A2D5_GsContabilidadModel.Herramienta_Bodega" />
           <EntitySet Name="Items" EntityType="DB_A2A2D5_GsContabilidadModel.Item" />
           <EntitySet Name="Item_Bodega" EntityType="DB_A2A2D5_GsContabilidadModel.Item_Bodega" />
+          <EntitySet Name="TasaCambios" EntityType="DB_A2A2D5_GsContabilidadModel.TasaCambio" />
           <AssociationSet Name="FK__Herramien__IdBod__30F848ED" Association="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdBod__30F848ED">
             <End Role="Bodega" EntitySet="Bodegas" />
             <End Role="Herramienta_Bodega" EntitySet="Herramienta_Bodega" />
@@ -158,6 +169,14 @@
             <End Role="Item_Bodega" EntitySet="Item_Bodega" />
           </AssociationSet>
         </EntityContainer>
+        <ComplexType Name="Pro_GetFullItems_Result">
+          <Property Type="Int32" Name="IdITem" Nullable="false" />
+          <Property Type="String" Name="CodigoItem" Nullable="false" MaxLength="20" />
+          <Property Type="Single" Name="CostoDolar" Nullable="false" />
+          <Property Type="Single" Name="Column1" Nullable="true" />
+          <Property Type="Int32" Name="TotalBodegas" Nullable="true" />
+          <Property Type="Int32" Name="TotalUnidad" Nullable="true" />
+        </ComplexType>
         <EntityType Name="Bodega">
           <Key>
             <PropertyRef Name="IdBodega" />
@@ -198,14 +217,10 @@
             <PropertyRef Name="IdItem" />
           </Key>
           <Property Name="IdItem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ubicacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Cantidad" Type="Single" Nullable="false" />
           <Property Name="Codigo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UniCosDolar" Type="Single" Nullable="false" />
           <Property Name="UniCosCordo" Type="Single" Nullable="false" />
-          <Property Name="TotalCosDolar" Type="Single" Nullable="false" />
-          <Property Name="TotalCosCordo" Type="Single" Nullable="false" />
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Item_Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdIte__276EDEB3" FromRole="Item" ToRole="Item_Bodega" />
         </EntityType>
@@ -220,6 +235,16 @@
           <Property Name="Unidad" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Bodega" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdBod__286302EC" FromRole="Item_Bodega" ToRole="Bodega" />
           <NavigationProperty Name="Item" Relationship="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdIte__276EDEB3" FromRole="Item_Bodega" ToRole="Item" />
+        </EntityType>
+        <EntityType Name="TasaCambio">
+          <Key>
+            <PropertyRef Name="IdTasaCambio" />
+          </Key>
+          <Property Name="IdTasaCambio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFin" Type="DateTime" Precision="3" />
+          <Property Name="Validez" Type="Boolean" Nullable="false" />
+          <Property Name="Valor" Type="Single" Nullable="false" />
         </EntityType>
         <Association Name="FK__Herramien__IdBod__30F848ED">
           <End Type="DB_A2A2D5_GsContabilidadModel.Bodega" Role="Bodega" Multiplicity="1" />
@@ -275,6 +300,18 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DB_A2A2D5_GsContabilidadModelStoreContainer" CdmEntityContainer="DB_A2A2D5_GsContabilidadEntities">
+          <FunctionImportMapping FunctionImportName="Pro_GetFullItems" FunctionName="DB_A2A2D5_GsContabilidadModel.Store.Pro_GetFullItems">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Pro_GetFullItems_Result">
+                <ScalarProperty Name="IdITem" ColumnName="IdITem" />
+                <ScalarProperty Name="CodigoItem" ColumnName="CodigoItem" />
+                <ScalarProperty Name="CostoDolar" ColumnName="CostoDolar" />
+                <ScalarProperty Name="Column1" ColumnName="Column1" />
+                <ScalarProperty Name="TotalBodegas" ColumnName="TotalBodegas" />
+                <ScalarProperty Name="TotalUnidad" ColumnName="TotalUnidad" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Bodegas">
             <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Bodega">
               <MappingFragment StoreEntitySet="Bodega">
@@ -312,14 +349,10 @@
             <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.Item">
               <MappingFragment StoreEntitySet="Item">
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="TotalCosCordo" ColumnName="TotalCosCordo" />
-                <ScalarProperty Name="TotalCosDolar" ColumnName="TotalCosDolar" />
                 <ScalarProperty Name="UniCosCordo" ColumnName="UniCosCordo" />
                 <ScalarProperty Name="UniCosDolar" ColumnName="UniCosDolar" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Ubicacion" ColumnName="Ubicacion" />
                 <ScalarProperty Name="IdItem" ColumnName="IdItem" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -332,6 +365,17 @@
                 <ScalarProperty Name="IdBodega" ColumnName="IdBodega" />
                 <ScalarProperty Name="IdItem" ColumnName="IdItem" />
                 <ScalarProperty Name="IdItemBodega" ColumnName="IdItemBodega" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TasaCambios">
+            <EntityTypeMapping TypeName="DB_A2A2D5_GsContabilidadModel.TasaCambio">
+              <MappingFragment StoreEntitySet="TasaCambio">
+                <ScalarProperty Name="Valor" ColumnName="Valor" />
+                <ScalarProperty Name="Validez" ColumnName="Validez" />
+                <ScalarProperty Name="FechaFin" ColumnName="FechaFin" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="IdTasaCambio" ColumnName="IdTasaCambio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
