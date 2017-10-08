@@ -37,7 +37,7 @@ namespace GeneralStore_Web.Areas.Inventario.Controllers
 
             registros = objeto.DetalleItem(IdItem);
 
-            return Json(new { TasaCambio=registros.TasaCambio, Estado = registros.Peticion }, JsonRequestBehavior.AllowGet);
+            return Json(new { Lista = registros.Lista, TasaCambio =registros.TasaCambio, Estado = registros.Peticion }, JsonRequestBehavior.AllowGet);
 
 
 

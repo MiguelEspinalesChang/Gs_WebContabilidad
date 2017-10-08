@@ -164,7 +164,6 @@ namespace ModeloDatos.VM.Inventario
                     listaEnBodega = value;
                 }
             }
-            
         }
 
 
@@ -174,7 +173,7 @@ namespace ModeloDatos.VM.Inventario
             private List<ObjetosItem> lista;
             private bool peticion;
             private float tasaCambio;
-
+            private bool errorTasaCambio;
 
             public List<ObjetosItem> Lista
             {
@@ -214,7 +213,22 @@ namespace ModeloDatos.VM.Inventario
                     tasaCambio = value;
                 }
             }
+
+            public bool ErrorTasaCambio
+            {
+                get
+                {
+                    return errorTasaCambio;
+                }
+
+                set
+                {
+                    errorTasaCambio = value;
+                }
+            }
         }
+
+        private DB_A2A2D5_GsContabilidadEntities dataContext = new DB_A2A2D5_GsContabilidadEntities();
 
         public Json_Item ObtenerItems()
         {
@@ -222,93 +236,82 @@ namespace ModeloDatos.VM.Inventario
             Json_Item retorno = new Json_Item();
             retorno.Lista = new List<ObjetosItem>();
 
-            retorno.Lista.Add(new ObjetosItem
+
+
+            try
             {
 
-                IdItem= 1,
-                Descripcion = "Descripcion del item",
-                Codigo = "Ite-VDA10",
-                CantidadTotal = 12,
-                UniCosDolar1 = 1,
-                UniCosCordo1 = 30.75F,
-                
+                var tasaCambio = (from item in dataContext.TasaCambios
+                                  where item.Validez == true && item.Valor > 26
+                                  select item.Valor).FirstOrDefault();
 
-            });
 
-            retorno.Lista.Add(new ObjetosItem
+
+                if (tasaCambio < 26)
+                {
+                    retorno.TasaCambio = 0.00F;
+                    retorno.Peticion = true;
+                }
+                else
+                {
+                    retorno.TasaCambio = tasaCambio;
+                    retorno.Peticion = true;
+                    retorno.ErrorTasaCambio = true;
+                    return retorno;
+                }
+            }
+            catch (Exception e)
             {
-
-                IdItem = 2,
-                Descripcion = "item con descripcion",
-                Codigo = "Ite-VD323",
-                CantidadTotal = 12,
-                UniCosDolar1 = 2,
-                UniCosCordo1 = 61.50F,
+                retorno.TasaCambio = 0.00F;
+                retorno.ErrorTasaCambio = true;
+                retorno.Peticion = false;
+                return retorno;
+            }
 
 
-            });
-
-            retorno.Lista.Add(new ObjetosItem
+            try
             {
+                retorno.Lista = (from item in dataContext.Items
+                                 where item.Estado == true
+                                 select new ObjetosItem
+                                 {
+                                     IdItem = item.IdItem,
+                                     Descripcion = item.Descripcion,
+                                     Codigo = item.Codigo,
+                                     CantidadTotal = 0,
+                                     UniCosDolar1 = item.UniCosDolar,
+                                     UniCosCordo1 = 0
+                                 }).ToList();
 
-                IdItem = 3,
-                Descripcion = "Descripcion del item",
-                Codigo = "Ite-VGA3",
-                CantidadTotal = 52,
-                UniCosDolar1 = 3,
-                UniCosCordo1 = 92.25F,
+
+                var listaItemBodega = (from item in dataContext.Item_Bodega
+                                       select item).ToList();
+
+                foreach (var itemNorma in retorno.Lista)
+                {
+                    foreach (var itemBodega in listaItemBodega)
+                    {
+                        if (itemNorma.IdItem == itemBodega.IdItem)
+                        {
+                            itemNorma.CantidadTotal += itemBodega.Unidad;
+                            itemNorma.UniCosCordo1 = retorno.TasaCambio * itemNorma.UniCosDolar1;
+                        }
+                    }
+                }
+
+                retorno.Peticion = true;
+
+            }
+            catch (Exception e)
+            {
+                retorno.Peticion = false;
+            }
 
 
-            });
 
-            retorno.Peticion = true;
+
 
             return retorno;
-            //        using (var context = new DB_A2A2D5_GsContabilidadEntities())
-            //        {
-            //            ////var errorPro = new objectP
-            //            //ObjectParameter error = new ObjectParameter("Error", 0);
-            //            //ObjectParameter mensaje = new ObjectParameter("Mensaje", "");
-
-            //            //context.Pro_GetFullItems();
-
-            //            List<float> valorTasaCambio = (from item in context.TasaCambios
-            //                                     where item.Valor > 27 && item.Validez == true
-            //                                     && item.FechaInicio != null
-            //                                     select item.Valor).ToList();
-
-
-            //            float valor = (valorTasaCambio.Any()) ? valorTasaCambio.Max(x => x) : 0;
-
-            //            //var asdad = (from item in context.Item_Bodega
-            //            //             where )
-
-            //            string sqlQuery = "Select "+
-            // "item_bodega.idITem AS IdItem,"+
-            // "ite.Codigo AS CodigoItem,"+
-            // "ite.UniCosDolar AS CostoDolar," +
-            //" ite.UniCosDolar*30 AS CostoCordoba," +
-            // " Count(Item_Bodega.idBodega) AS TotalBodegas," +
-            // " Sum(Item_Bodega.Unidad) AS TotalUnidad " +
-
-
-            //            " From Item AS ite inner join Item_Bodega on Item_Bodega.idItem = ite.idItem "+
-
-            //            "inner join Bodega on Item_Bodega.idBodega = Bodega.IdBodega " +
-
-            //            " Group By Item_Bodega.IdItem, ite.Codigo, ite.UniCosDolar";
-
-            //            var consulta = context.Database.ExecuteSqlCommand(
-            //                sqlQuery
-            //                );
-
-
-            //            return null;
-
-            //        }
-
-            //        return null;
-
 
 
 
@@ -316,40 +319,115 @@ namespace ModeloDatos.VM.Inventario
 
 
 
-        public Json_Item DetalleItem(int idItem)
+        public Json_Item DetalleItem(int idItemDetalle)
         {
             Json_Item retorno = new Json_Item();
-            using (var context = new DB_A2A2D5_GsContabilidadEntities())
+            try
             {
 
-                try
-                {
-                    var tasaCambio = (from item in context.TasaCambios
-                                      where item.Validez == true && item.Valor > 26
-                                      select item.Valor).FirstOrDefault();
+                var tasaCambio = (from item in dataContext.TasaCambios
+                                  where item.Validez == true && item.Valor > 26
+                                  select item.Valor).FirstOrDefault();
 
-                    if (tasaCambio < 26)
-                    {
-                        retorno.TasaCambio = 0.00F;
-                        retorno.Peticion = false;
-                    }
-                    else
-                    {
-                        retorno.TasaCambio = tasaCambio;
-                        retorno.Peticion = true;
-                    }
-                }
-                catch(Exception e)
+
+
+                if (tasaCambio < 26)
                 {
                     retorno.TasaCambio = 0.00F;
                     retorno.Peticion = false;
+                    retorno.ErrorTasaCambio = true;
                 }
-                
-
+                else
+                {
+                    retorno.TasaCambio = tasaCambio;
+                    retorno.Peticion = true;
+                    retorno.ErrorTasaCambio = true;
+                    return retorno;
+                }
+            }
+            catch (Exception e)
+            {
+                retorno.TasaCambio = 0.00F;
+                retorno.Peticion = false;
                 return retorno;
+            }
+
+            try
+            {
+                Item itemBuscar = new Item();
+                retorno.Lista = new List<ObjetosItem>();
+
+                if (idItemDetalle > 0)
+                    itemBuscar = (from item in dataContext.Items
+                                  where item.IdItem == idItemDetalle
+                                  && item.Estado == true
+                                  select item).FirstOrDefault();
+
+                if (idItemDetalle > 0 && itemBuscar == null)
+                {
+                    retorno.TasaCambio = 0.00F;
+                    retorno.Peticion = false;
+                    return retorno;
+                }
+
+
+                if (idItemDetalle > 0)
+                {
+
+                    retorno.Lista.Add(new ObjetosItem
+                    {
+                        IdItem = itemBuscar.IdItem,
+                        Descripcion = itemBuscar.Descripcion,
+                        Codigo = itemBuscar.Codigo,
+                        UniCosDolar1 = itemBuscar.UniCosDolar,
+                        CantidadTotal = 0,
+                        UniCosCordo1 = 0
+                    });
+
+                    var item_bodega = (from item in dataContext.Item_Bodega
+                                       where item.IdItem == idItemDetalle
+                                       select item).ToList();
+
+                    foreach (var itemNorma in retorno.Lista)
+                    {
+                        itemNorma.ListaEnBodega = new List<ObjetoItem_Bodega>();
+                        foreach (var itemBodega in item_bodega)
+                        {
+                            if (itemNorma.IdItem == itemBodega.IdItem)
+                            {
+                                itemNorma.CantidadTotal += itemBodega.Unidad;
+                                itemNorma.ListaEnBodega.Add(new ObjetoItem_Bodega
+                                {
+                                    IdItemBodega = itemBodega.IdItemBodega,
+                                    IdItem = itemBodega.IdItem,
+                                    IdBodega = itemBodega.IdBodega,
+                                    Ubicacion = itemBodega.Ubicacion,
+                                    Unidad = itemBodega.Unidad
+                                });
+                            }
+                        }
+                    }
+                }
+
 
             }
-                
+            catch (Exception e)
+            {
+                retorno.TasaCambio = 0.00F;
+                retorno.Peticion = false;
+                return retorno;
+            }
+
+
+
+
+            retorno.TasaCambio = 30.80F;
+            retorno.Peticion = true;
+
+            return retorno;
+
+
+
 
 
         }

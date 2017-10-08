@@ -1,6 +1,35 @@
 ﻿$(document).ready(function () {
 
 
+    var modaltasacambio = Vue.component("modal-tasa-cambio", {
+
+
+        template: [
+                    '<div id="modal-tasaCambio" class="modal fade" role="dialog" >',
+                    '<div class="modal-dialog">',
+                    '<div class="modal-content">',
+
+                        '<div class="modal-header">',
+                        '</div>',
+                        '<div class="modal-body">',
+                            '<h1>asdasdasdsadsad {{tasaCambio}}</h1>',
+                        '</div>',
+                        '<div class="modal-footer">',
+                        '</div>',
+
+                    '</div>',
+                    '</div>',
+                    '</div>'
+        ].join(''),
+        props: {
+            tasaCambio: {
+                type: Number || String,
+                required: true
+            }
+        },
+
+    });
+
     var alertasComponent = Vue.component("alertas-noob", {
 
         template: [
@@ -277,8 +306,12 @@
             mIdItem: 0,
             mUniCosDolar: 0,
             mUniCosCordo: 0,
+            mTotalCosCordo: 0,
+            mTotalCosDolar: 0,
             mCantidadTotal: 0,
-            listaErrores: []
+            listaErrores: [],
+            tasaCambioModal: false,
+            listaItem_Bodegas: []
         },
         mounted() {
             $("#appVue").toggle("fast", function () {
@@ -294,14 +327,17 @@
                 this.mUniCosDolar = 0;
                 this.mUniCosCordo = 0;
                 this.mCantidadTotal = 0;
+                this.mTotalCosCordo = 0,
+                this.mTotalCosDolar = 0,
                 this.listaErrores = [];
+                this.listaItem_Bodegas = [];
             },
             NuevoRegistroNoob: function () {
                 this.LimpiarVariables();
                 this.estaCreando = true;
                 this.visibleAlerta = false;
                 this.esNuevo = true;
-
+                this.FormatPreciosUniDolar();
                 this.ObtenerDetalleItem();
             },
             EditarRegistroNoob: function (datos) {
@@ -312,9 +348,8 @@
                 this.mDescripcion = "" + datos.Descripcion,
                 this.mCodigo = "" + datos.Codigo,
                 this.mIdItem = datos.IdItem;
-                this.mUniCosDolar = datos.UniCosDolar;
-                this.mUniCosCordo = datos.UniCosCordo;
                 this.mCantidadTotal = datos.CantidadTotal;
+                this.FormatPreciosUniDolar();
 
                 this.ObtenerDetalleItem();
             },
@@ -393,7 +428,7 @@
 
 
             },
-            ObtenerDetalleItem: function(){
+            ObtenerDetalleItem: function () {
 
 
 
@@ -431,14 +466,26 @@
                         if (json.Estado == false) {
 
                             this.estadoAlerta = false;
-                            this.errorDataNoob = true;
+                            this.errorDataNoob = false;
                             this.visibleAlerta = true;
                         }
                         else {
                             this.errorDataNoob = false;
-                            this.estadoAlerta = true;
+                            this.estadoAlerta = false;
                             this.visibleAlerta = false;
+
                             this.tasaCambio = json.TasaCambio;
+
+                            if (this.esNuevo == false) {
+                                this.mDescripcion = json.Lista[0].Descripcion;
+                                this.mCodigo = json.Lista[0].Codigo;
+                                this.mCantidadTotal = json.Lista[0].CantidadTotal;
+                                this.mUniCosDolar = json.Lista[0].UniCosDolar1;
+                                this.FormatPreciosUniDolar();
+                                this.listaItem_Bodegas = json.Lista[0].ListaEnBodega;
+                            }
+
+
                         }
 
 
@@ -572,8 +619,106 @@
 
 
             }
+            ,
+            Btn_EditarTasa: function () {
+
+                this.tasaCambioModal = true;
+
+
+            },
+            KeyUpPreciosUniCordo: function (event) {
+
+                let valorFormat = this.FormatearPreciosUni(this.mUniCosCordo);
+                this.mUniCosCordo = valorFormat;
+
+                if (valorFormat[valorFormat.length - 1] != '.') {
+                    this.mUniCosDolar = (parseFloat(valorFormat) / parseFloat(this.tasaCambio)).toFixed(4);
+                    this.mTotalCosCordo = (parseFloat(valorFormat) * parseFloat(this.mCantidadTotal)).toFixed(4);
+                    this.mTotalCosDolar = (parseFloat(this.mUniCosDolar) * parseFloat(this.mCantidadTotal)).toFixed(4);
+                }
+
+            },
+            KeyUpPreciosUniDolar: function (event) {
+
+                let valorFormat = this.FormatearPreciosUni(this.mUniCosDolar);
+                this.mUniCosDolar = valorFormat;
+
+                if (valorFormat[valorFormat.length - 1] != '.') {
+                    this.mUniCosCordo = (parseFloat(valorFormat) * parseFloat(this.tasaCambio)).toFixed(4);
+                    this.mTotalCosCordo = (parseFloat(this.mUniCosCordo) * parseFloat(this.mCantidadTotal)).toFixed(4);
+                    this.mTotalCosDolar = (parseFloat(valorFormat) * parseFloat(this.mCantidadTotal)).toFixed(4);
+                }
+
+            },
+            FormatPreciosUniDolar: function () {
+                let valorFormat = this.FormatearPreciosUni(this.mUniCosDolar);
+                this.mUniCosDolar = valorFormat;
+
+                if (valorFormat[valorFormat.length - 1] != '.') {
+                    this.mUniCosCordo = (parseFloat(valorFormat) * parseFloat(this.tasaCambio)).toFixed(4);
+                    this.mTotalCosCordo = (parseFloat(this.mUniCosCordo) * parseFloat(this.mCantidadTotal)).toFixed(4);
+                    this.mTotalCosDolar = (parseFloat(valorFormat) * parseFloat(this.mCantidadTotal)).toFixed(4);
+                }
+            },
+            FormatearPreciosUni: function (val) {
+                let numeros = "0123456789.";
+                let nuevoVal = "";
+                let contadorPunto = 0;
+                val = '' + val;
+                for (let i = 0; i < val.length; i++) {
+                    if (val[i] == '.') {
+                        contadorPunto++;
+                    }
+                    if (contadorPunto > 1)
+                        break;
+
+                    if (numeros.indexOf(val[i]) > -1) {
+                        nuevoVal += '' + val[i];
+                    }
+
+                }
+                if (val.length == 0 || nuevoVal.length == 0)
+                    nuevoVal = "0";
+
+                let contadorCeroIzquierda = 0;
+                let seguimiento = false;
+                for (let i = 0; i < nuevoVal.length; i++) {
+                    if (i == 0 && nuevoVal[i] == "0") {
+                        contadorCeroIzquierda++;
+                        seguimiento = true;
+                    }
+
+                    if (i > 0)
+                        if (seguimiento == true && nuevoVal[i] == "0")
+                            contadorCeroIzquierda++;
+
+                        else
+                            break;
+
+
+                }
+
+                if (seguimiento && contadorCeroIzquierda > 1) {
+
+                    nuevoVal = nuevoVal.slice(contadorCeroIzquierda - 1, nuevoVal.length);
+
+                }
+                else
+                    if(seguimiento && nuevoVal.length>1 && nuevoVal[1] != '.')
+                        nuevoVal = nuevoVal.slice(1, nuevoVal.length);
+
+                val = nuevoVal;
+
+                return val;
+            }
+
         },
         computed: {
+            clasesTasaCambio: function () {
+                return {
+                    'inputError': this.tasaCambio < 26
+                }
+            },
             clasesFormulario: function () {
                 return {
                     'cartaAgregar': this.esNuevo,
@@ -618,32 +763,17 @@
             }
         },
         watch: {
-            mUniCosDolar: function (val, oldVal) {
+            //mUniCosDolar: function (val, oldVal) {
+
+            //    this.KeyUpPreciosUniDolar();
+
+            //},
+            //mUniCosCordo: function (val, oldVal) {
 
 
-                if (!isNaN(val))
-                    this.mUniCosCordo = val * this.tasaCambio;
-                else
-                    val = oldVal;
+            //    this.KeyUpPreciosUniCordo();
 
-            },
-            mUniCosCordo: function (val, oldVal) {
-
-                if (!isNaN(val))
-                    this.mUniCosDolar = val / this.tasaCambio;
-                else
-                    val = oldVal;
-
-
-            },
-            tasaCambio: function (val, oldVal)
-            {
-                if(!isNaN(val) && parseInt(val) > 26)
-                {
-                    this.mUniCosCordo = this.mUniCosDolar * val;
-                    this.mUniCosDolar = this.mUniCosCordo / val;
-                }
-            }
+            //}
         }
 
 

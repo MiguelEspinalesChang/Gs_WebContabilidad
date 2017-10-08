@@ -190,6 +190,7 @@ namespace ModeloDatos.VM.Inventario
                     registro.Nombre = datos.Nombre;
                     registro.Descripcion = datos.Descripcion;
                     registro.Codigo = datos.Codigo;
+                    registro.Estado = true;
                     dataContext.Bodegas.Add(registro);
 
                     dataContext.SaveChanges();
@@ -216,6 +217,7 @@ namespace ModeloDatos.VM.Inventario
                         registro.Nombre = datos.Nombre;
                         registro.Descripcion = datos.Descripcion;
                         registro.Codigo = datos.Codigo;
+                        registro.Estado = true;
 
                         dataContext.Entry(registro).State = EntityState.Modified;
                         dataContext.SaveChanges();

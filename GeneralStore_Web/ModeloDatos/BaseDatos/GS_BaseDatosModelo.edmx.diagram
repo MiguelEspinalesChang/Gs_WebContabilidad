@@ -5,16 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3632684dcc814e25b72fa915c08757ea" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Bodega" Width="1.5" PointX="0.75" PointY="2.5" />
-        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Herramienta" Width="1.5" PointX="0.75" PointY="8" />
-        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Herramienta_Bodega" Width="1.5" PointX="3" PointY="2.625" />
-        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Item" Width="1.5" PointX="3.75" PointY="7.625" />
-        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Item_Bodega" Width="1.5" PointX="6" PointY="2.625" />
-        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.TasaCambio" Width="1.5" PointX="5.75" PointY="6.75" />
-        <AssociationConnector Association="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdBod__30F848ED" />
-        <AssociationConnector Association="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdBod__286302EC" />
-        <AssociationConnector Association="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdHer__300424B4" />
-        <AssociationConnector Association="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdIte__276EDEB3" />
+        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Bodega" Width="1.5" PointX="0.75" PointY="3.375" />
+        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Herramienta" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Herramienta_Bodega" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Item" Width="1.5" PointX="3.75" PointY="8.125" />
+        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.Item_Bodega" Width="1.5" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="DB_A2A2D5_GsContabilidadModel.TasaCambio" Width="1.5" PointX="0.75" PointY="7.5" />
+        <AssociationConnector Association="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdBod__1B0907CE" />
+        <AssociationConnector Association="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdBod__15502E78" />
+        <AssociationConnector Association="DB_A2A2D5_GsContabilidadModel.FK__Herramien__IdHer__1A14E395" />
+        <AssociationConnector Association="DB_A2A2D5_GsContabilidadModel.FK__Item_Bode__IdIte__145C0A3F" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

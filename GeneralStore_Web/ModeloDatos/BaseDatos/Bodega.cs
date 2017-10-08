@@ -27,7 +27,6 @@ namespace ModeloDatos.BaseDatos
         public string Direccion { get; set; }
         public string Nombre { get; set; }
         public bool Estado { get; set; }
-        public Nullable<int> IdTipoBodega { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Herramienta_Bodega> Herramienta_Bodega { get; set; }

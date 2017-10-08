@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "IndexBodega";
     Layout = "~/Views/Compartida/_LayoutPrincipal.cshtml";
+
+    int rolUsuario = 1;
 }
 
 <link href="~/FrontEnd/animate.css" rel="stylesheet" />
@@ -20,6 +22,9 @@
                   v-bind:accion-Alerta="accionAlerta">
 
     </alertas-noob>
+
+    <modal-tasa-cambio v-if="tasaCambioModal" v-bind:tasaCambio="tasaCambio" v-on:close="tasaCambioModal = false">
+    </modal-tasa-cambio>
 
 
     <div class="row">
@@ -74,13 +79,35 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Tasa de cambio: </label>
-                        <div class="input-group">
-                            <span class="input-group-addon">1 Dolar </span>
-                            <input type="text" v-model="tasaCambio" v-bind:disabled="true" placeholder="La tasa de cambio" class="form-control">
+                    @if (rolUsuario == 1)
+                    {
+                        <div class="row form-group">
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <label>Tasa de cambio: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon" v-bind:class="clasesTasaCambio">1 Dolar </span>
+                                    <input type="text" v-bind:class="clasesTasaCambio" v-model="tasaCambio" v-bind:disabled="true" placeholder="La tasa de cambio" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <label style="width: 100%;">Editar tasa de cambio: </label>
+                                <button class="btn btn-warning" v-on:click="Btn_EditarTasa"><i class="fa fa-edit"></i> $ </button>
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label>Tasa de cambio: </label>
+                            <div class="input-group">
+                                <span class="input-group-addon" v-bind:class="clasesTasaCambio">1 Dolar </span>
+                                <input type="text" v-model="tasaCambio" v-bind:class="clasesTasaCambio"
+                                       v-bind:disabled="true" placeholder="La tasa de cambio" class="form-control">
+                            </div>
+                        </div>
+                    }
+
+
 
                     <div class="row">
 
@@ -89,7 +116,14 @@
                                 <label>Precio unitario C$: </label>
                                 <div class="input-group">
                                     <span class="input-group-addon">C$</span>
-                                    <input type="text" v-model="mUniCosCordo" v-bind:disabled="peticionServer" placeholder="Precio unitario en Cordoba" class="form-control">
+                                    <input type="text"
+                                           v-model="mUniCosCordo"
+                                           v-bind:disabled="peticionServer || tasaCambio == 0"
+                                           placeholder="Precio unitario en Cordoba"
+                                           class="form-control"
+                                           v-on:keyUp="KeyUpPreciosUniCordo"
+                                           v-on:paste="KeyUpPreciosUniCordo"
+                                           v-on:delete="KeyUpPreciosUniCordo">
                                 </div>
                             </div>
                         </div>
@@ -99,7 +133,44 @@
                                 <label>Precio unitario $: </label>
                                 <div class="input-group">
                                     <span class="input-group-addon">$</span>
-                                    <input type="text" v-model="mUniCosDolar" v-bind:disabled="peticionServer" placeholder="Precio unitario en Dolar" class="form-control">
+                                    <input type="text" v-model="mUniCosDolar"
+                                           v-bind:disabled="peticionServer || tasaCambio == 0"
+                                           placeholder="Precio unitario en Dolar"
+                                           class="form-control"
+                                           v-on:keyUp="KeyUpPreciosUniDolar"
+                                           v-on:paste="KeyUpPreciosUniDolar"
+                                           v-on:delete="KeyUpPreciosUniDolar">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Costo total C$: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">C$</span>
+                                    <input type="text"
+                                           v-model="mTotalCosCordo"
+                                           v-bind:disabled="true"
+                                           placeholder="Costo total en Cordobas"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="form-group">
+                                <label>Costo total $: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" v-model="mTotalCosDolar"
+                                           v-bind:disabled="true"
+                                           placeholder="Costo total en Dolares"
+                                           class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -112,6 +183,44 @@
                         <input type="text" v-model="mCantidadTotal" v-bind:disabled="true" placeholder="Total de unidades del item" class="form-control">
                     </div>
 
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-12">
+
+                            <table class="table table-striped ">
+
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%">
+                                            Codigo
+                                        </th>
+                                        <th style="width:35%">
+                                            Descripcion
+                                        </th>
+                                        <th style="width:25%">
+                                            Unidades
+                                        </th>
+                                        <th style="width:20%">
+                                            Union
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr v-for="it in listaItem_Bodegas">
+                                        <td >{{it.codigoBodega}}</td>
+                                        <td >{{it.descripBodega}}</td>
+                                        <td >{{it.unidades}}</td>
+                                        <td ><input type="checkbox" checked="{{it.union}}"/></td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+
 
                     <div class="row" v-show="listaErrores.length>0" style="margin-top:10px; margin-bottom:10px;">
                         <div class="col-xs-12 col-lg-12">
@@ -122,6 +231,8 @@
                         </div>
                     </div>
 
+
+                    <hr />
 
                     <div class="form-group">
                         <button class="btn btn-success pull-left" v-show="!peticionServer"
@@ -146,6 +257,7 @@
 
 
 </div>
+
 
 
 

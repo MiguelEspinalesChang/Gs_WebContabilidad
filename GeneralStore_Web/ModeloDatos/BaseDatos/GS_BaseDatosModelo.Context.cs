@@ -34,9 +34,9 @@ namespace ModeloDatos.BaseDatos
         public virtual DbSet<Item_Bodega> Item_Bodega { get; set; }
         public virtual DbSet<TasaCambio> TasaCambios { get; set; }
     
-        public virtual int Pro_GetFullItems()
+        public virtual ObjectResult<Pro_GetFullItems_Result> Pro_GetFullItems()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Pro_GetFullItems");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Pro_GetFullItems_Result>("Pro_GetFullItems");
         }
     }
 }
