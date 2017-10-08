@@ -191,10 +191,10 @@
                                 <thead>
                                     <tr>
                                         <th style="width:20%">
-                                            Codigo
+                                            Bodega
                                         </th>
                                         <th style="width:35%">
-                                            Descripcion
+                                            Ubicacion
                                         </th>
                                         <th style="width:25%">
                                             Unidades
@@ -208,10 +208,14 @@
                                 <tbody>
 
                                     <tr v-for="it in listaItem_Bodegas">
-                                        <td >{{it.codigoBodega}}</td>
-                                        <td >{{it.descripBodega}}</td>
-                                        <td >{{it.unidades}}</td>
-                                        <td ><input type="checkbox" checked="{{it.union}}"/></td>
+                                        <td >{{it.CodigoBodega}} - {{it.DescripcionBodega}}</td>
+                                        <td ><input v-model="it.Ubicacion" class="form-control" v-on:keyUp="KeyUpPreciosUniDolar"
+                                           v-on:paste="KeyUpPreciosUniDolar"
+                                           v-on:delete="KeyUpPreciosUniDolar"/></td>
+                                        <td ><input v-model="it.Unidad" class="form-control" v-on:keyUp="KeyUpUnidades(it.IdItemBodega)"
+                                           v-on:paste="KeyUpUnidades(it.IdItemBodega)"
+                                           v-on:delete="KeyUpUnidades(it.IdItemBodega)" /></td>
+                                        <td ><input type="checkbox" checked="{{it.Union}}"/></td>
                                     </tr>
 
                                 </tbody>

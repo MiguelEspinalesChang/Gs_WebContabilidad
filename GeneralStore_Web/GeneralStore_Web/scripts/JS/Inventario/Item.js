@@ -392,20 +392,26 @@
                         //500: error interno del server
 
                         this.accionAlerta = 1;
-
-                        if (json.Estado == false) {
-
-                            this.estadoAlerta = false;
-                            this.errorDataNoob = true;
-                            this.dataNoob = [];
-                            this.visibleAlerta = true;
-
+                        if (json.ErrorTasaCambio == true) {
+                            alert("ERROR CON LA TASA DE CAMBIO !!");
                         }
                         else {
-                            this.errorDataNoob = false;
-                            this.estadoAlerta = true;
-                            this.visibleAlerta = false;
+
+                            if (json.Estado == false) {
+
+                                this.estadoAlerta = false;
+                                this.errorDataNoob = true;
+                                this.dataNoob = [];
+                                this.visibleAlerta = true;
+
+                            }
+                            else {
+                                this.errorDataNoob = false;
+                                this.estadoAlerta = true;
+                                this.visibleAlerta = false;
+                            }
                         }
+
 
 
                         this.peticionServer = false;
@@ -476,14 +482,21 @@
 
                             this.tasaCambio = json.TasaCambio;
 
-                            if (this.esNuevo == false) {
-                                this.mDescripcion = json.Lista[0].Descripcion;
-                                this.mCodigo = json.Lista[0].Codigo;
-                                this.mCantidadTotal = json.Lista[0].CantidadTotal;
-                                this.mUniCosDolar = json.Lista[0].UniCosDolar1;
-                                this.FormatPreciosUniDolar();
-                                this.listaItem_Bodegas = json.Lista[0].ListaEnBodega;
+                            if (json.ErrorTasaCambio == true) {
+                                alert("ERROR CON LA TASA DE CAMBIO !!");
                             }
+                            else
+                            {
+                                if (this.esNuevo == false) {
+                                    this.mDescripcion = json.Lista[0].Descripcion;
+                                    this.mCodigo = json.Lista[0].Codigo;
+                                    this.mCantidadTotal = json.Lista[0].CantidadTotal;
+                                    this.mUniCosDolar = json.Lista[0].UniCosDolar1;
+                                    this.FormatPreciosUniDolar();
+                                    this.listaItem_Bodegas = json.Lista[0].ListaEnBodega;
+                                }
+                            }
+
 
 
                         }
@@ -650,6 +663,36 @@
                 }
 
             },
+            KeyUpUnidades: function (idItemBodega) {
+
+                let temporal = 0;
+                for (let ciclo = 0; ciclo < this.listaItem_Bodegas.length; ciclo++) {
+                    if (this.listaItem_Bodegas[ciclo].IdItemBodega == idItemBodega) {
+                        temporal = this.listaItem_Bodegas[ciclo].Unidad;
+                    }
+                }
+                let valorFormat = this.FormatearPreciosUni(temporal);
+                //this.mUniCosDolar = valorFormat;
+                let contadorTotal = 0;
+                for(let ciclo = 0; ciclo < this.listaItem_Bodegas.length; ciclo++)
+                {
+                    if(this.listaItem_Bodegas[ciclo].IdItemBodega == idItemBodega)
+                    {
+                        this.listaItem_Bodegas[ciclo].Unidad = valorFormat;
+                        if (valorFormat[valorFormat.length - 1] != '.')
+                            contadorTotal += parseFloat(this.listaItem_Bodegas[ciclo].Unidad);
+                    }
+                    else
+                            contadorTotal += parseFloat(this.listaItem_Bodegas[ciclo].Unidad);
+                    
+                }
+
+                if (valorFormat[valorFormat.length - 1] != '.') {
+                    this.mCantidadTotal = contadorTotal;
+                    this.FormatPreciosUniDolar();
+                }
+
+            },
             FormatPreciosUniDolar: function () {
                 let valorFormat = this.FormatearPreciosUni(this.mUniCosDolar);
                 this.mUniCosDolar = valorFormat;
@@ -704,7 +747,7 @@
 
                 }
                 else
-                    if(seguimiento && nuevoVal.length>1 && nuevoVal[1] != '.')
+                    if (seguimiento && nuevoVal.length > 1 && nuevoVal[1] != '.')
                         nuevoVal = nuevoVal.slice(1, nuevoVal.length);
 
                 val = nuevoVal;

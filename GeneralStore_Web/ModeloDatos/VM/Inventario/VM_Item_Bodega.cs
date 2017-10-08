@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ModeloDatos.VM.Inventario
 {
-    class VM_Item_Bodega
+    public class VM_Item_Bodega
     {
 
         public class ObjetoItem_Bodega
@@ -18,6 +18,12 @@ namespace ModeloDatos.VM.Inventario
             public int IdBodega { get; set; }
             public string Ubicacion { get; set; }
             public int Unidad { get; set; }
+
+            public string CodigoBodega { get; set; }
+
+            public string DescripcionBodega { get; set; }
+
+            public bool Union { get; set; }
 
 
         }

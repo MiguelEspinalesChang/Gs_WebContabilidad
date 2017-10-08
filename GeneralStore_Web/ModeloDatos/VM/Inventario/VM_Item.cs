@@ -152,7 +152,7 @@ namespace ModeloDatos.VM.Inventario
                 }
             }
 
-            internal List<ObjetoItem_Bodega> ListaEnBodega
+            public List<ObjetoItem_Bodega> ListaEnBodega
             {
                 get
                 {
@@ -251,13 +251,13 @@ namespace ModeloDatos.VM.Inventario
                 {
                     retorno.TasaCambio = 0.00F;
                     retorno.Peticion = true;
+                    return retorno;
                 }
                 else
                 {
                     retorno.TasaCambio = tasaCambio;
                     retorno.Peticion = true;
-                    retorno.ErrorTasaCambio = true;
-                    return retorno;
+                    retorno.ErrorTasaCambio = false;
                 }
             }
             catch (Exception e)
@@ -336,19 +336,20 @@ namespace ModeloDatos.VM.Inventario
                     retorno.TasaCambio = 0.00F;
                     retorno.Peticion = false;
                     retorno.ErrorTasaCambio = true;
+                    return retorno;
                 }
                 else
                 {
                     retorno.TasaCambio = tasaCambio;
                     retorno.Peticion = true;
-                    retorno.ErrorTasaCambio = true;
-                    return retorno;
+                    retorno.ErrorTasaCambio = false;
                 }
             }
             catch (Exception e)
             {
                 retorno.TasaCambio = 0.00F;
                 retorno.Peticion = false;
+                retorno.ErrorTasaCambio = true;
                 return retorno;
             }
 
@@ -402,7 +403,10 @@ namespace ModeloDatos.VM.Inventario
                                     IdItem = itemBodega.IdItem,
                                     IdBodega = itemBodega.IdBodega,
                                     Ubicacion = itemBodega.Ubicacion,
-                                    Unidad = itemBodega.Unidad
+                                    Unidad = itemBodega.Unidad,
+                                    DescripcionBodega = itemBodega.Bodega.Descripcion,
+                                    CodigoBodega = itemBodega.Bodega.Codigo,
+                                    Union = true
                                 });
                             }
                         }
@@ -419,9 +423,6 @@ namespace ModeloDatos.VM.Inventario
             }
 
 
-
-
-            retorno.TasaCambio = 30.80F;
             retorno.Peticion = true;
 
             return retorno;

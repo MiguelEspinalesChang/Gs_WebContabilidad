@@ -51,18 +51,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDatos\BaseDatosModelo.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BaseDatosModelo.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BaseDatos\BaseDatosModelo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BaseDatosModelo.tt</DependentUpon>
+    </Compile>
     <Compile Include="BaseDatos\Bodega.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BaseDatos\GS_BaseDatosModelo.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GS_BaseDatosModelo.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BaseDatos\GS_BaseDatosModelo.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>BaseDatosModelo.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\GS_BaseDatosModelo.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -70,22 +70,22 @@
       <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Herramienta.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>BaseDatosModelo.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Herramienta_Bodega.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>BaseDatosModelo.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Item.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>BaseDatosModelo.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Item_Bodega.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>BaseDatosModelo.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\Pro_GetFullItems_Result.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>BaseDatosModelo.tt</DependentUpon>
     </Compile>
     <Compile Include="BaseDatos\TasaCambio.cs">
-      <DependentUpon>GS_BaseDatosModelo.tt</DependentUpon>
+      <DependentUpon>BaseDatosModelo.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,14 +111,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BaseDatos\GS_BaseDatosModelo.Context.tt">
+    <Content Include="BaseDatos\BaseDatosModelo.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GS_BaseDatosModelo.Context.cs</LastGenOutput>
+      <LastGenOutput>BaseDatosModelo.Context.cs</LastGenOutput>
       <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
     </Content>
-    <Content Include="BaseDatos\GS_BaseDatosModelo.tt">
+    <Content Include="BaseDatos\BaseDatosModelo.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>GS_BaseDatosModelo.cs</LastGenOutput>
+      <LastGenOutput>BaseDatosModelo.cs</LastGenOutput>
       <DependentUpon>GS_BaseDatosModelo.edmx</DependentUpon>
     </Content>
   </ItemGroup>
